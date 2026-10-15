@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1080" />
+    <title>I2B · Incubation &amp; investment · Blueprint</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/i2b-objects.css" />
+    <style>
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-600.woff2") format("woff2"); font-weight: 600; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-500.woff2") format("woff2"); font-weight: 500; }
+      @font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1080px; overflow: hidden; background: var(--ground-light); }
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        background-color: var(--ground-light);
+        background-image: radial-gradient(#0f0f0f1f 1.6px, transparent 1.6px);
+        background-size: 36px 36px;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      #scene { position: absolute; inset: 0; }
+      .topbar { position: absolute; left: 80px; right: 80px; top: 72px; display: flex; justify-content: space-between; }
+
+      /* ---- the container: a blueprint sheet (paper + faint structure-blue grid) ---- */
+      .sheet-paper {
+        position: absolute; left: 110px; top: 140px; width: 860px; height: 720px;
+        background-color: var(--paper);
+        background-image:
+          linear-gradient(#1c75bc33 1.5px, transparent 1.5px), linear-gradient(90deg, #1c75bc33 1.5px, transparent 1.5px),
+          linear-gradient(#1c75bc17 1px, transparent 1px), linear-gradient(90deg, #1c75bc17 1px, transparent 1px);
+        background-size: 150px 150px, 150px 150px, 30px 30px, 30px 30px;
+        background-position: -1px -1px;
+        border: var(--line) solid var(--ink); border-radius: 18px; box-shadow: 8px 8px 0 var(--ink);
+      }
+      .frame { position: absolute; inset: 12px; border: 2px solid #1c75bc59; border-radius: 10px; }
+      .sheet-tag { position: absolute; left: 30px; top: 28px; font: 500 18px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: #13578c; }
+      .titleblock {
+        position: absolute; left: 590px; top: 24px; width: 246px;
+        background: var(--paper); border: 2px solid var(--ink); border-radius: 10px; overflow: hidden;
+      }
+      .titleblock div { padding: 8px 12px; }
+      .titleblock div + div { border-top: 2px solid var(--ink); }
+      .tb-k { font: 500 18px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: #3d3d3d; }
+      .tb-v { font: 600 26px var(--f-body); color: var(--ink); }
+      .tb-team { font: 500 18px var(--f-mono); color: var(--ink); background: var(--live); }
+
+      /* ---- cue: dashed building outline + slot labels ---- */
+      #outline { position: absolute; left: 0; top: 0; width: 860px; height: 720px; }
+      #outline .dash { fill: none; stroke: #1c75bc; stroke-width: 3; stroke-dasharray: 12 9; stroke-linejoin: round; }
+      #outline .mk { fill: none; stroke: #fff; stroke-width: 12; }
+      .slot { position: absolute; font: 500 18px var(--f-mono); letter-spacing: .08em; color: #13578c; text-align: center; }
+
+      /* ---- support blocks: solid colour by role, ink outline, hard shadow ---- */
+      .blk {
+        position: absolute; display: flex; align-items: center; gap: 12px; padding: 0 22px;
+        border: var(--line) solid var(--ink); border-radius: 10px; box-shadow: 6px 6px 0 var(--ink);
+        font: 600 24px var(--f-body); color: var(--ink); white-space: nowrap;
+      }
+      .blk small { font: 500 18px var(--f-mono); color: #0f0f0fcc; }
+      .blk svg { width: 34px; height: 34px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+      #capital { left: 160px; top: 532px; width: 420px; height: 52px; background: var(--c-invoice); }
+      #product { left: 180px; top: 422px; width: 380px; height: 110px; background: var(--c-chat); align-items: flex-start; padding-top: 16px; }
+      #eng { left: 180px; top: 346px; width: 380px; height: 76px; background: var(--c-mail); color: var(--paper); }
+      #eng small { color: var(--paper); margin-left: auto; }
+      .lvl { left: 180px; width: 380px; height: 64px; background: var(--paper); }
+      .lvl small { color: #3d3d3d; }
+      .lvl .wins { margin-left: auto; display: flex; gap: 12px; }
+      .lvl .wins i { display: block; width: 30px; height: 26px; border: 2px solid var(--ink); border-radius: 4px; background: #d9dbe0; }
+      #lv2 { top: 282px; }
+      #lv3 { top: 218px; }
+      #roof { position: absolute; left: 170px; top: 128px; width: 400px; height: 90px; }
+      #roof svg.shape { position: absolute; left: 0; top: 0; width: 406px; height: 96px; overflow: visible; }
+      .roof-label { position: absolute; left: 0; right: 0; top: 34px; display: flex; justify-content: center; align-items: center; gap: 10px; font: 600 24px var(--f-body); color: var(--ink); }
+      .roof-label svg { width: 30px; height: 30px; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      #flag { position: absolute; left: 192px; top: -74px; width: 160px; height: 74px; }
+      #flag .pole { position: absolute; left: 0; top: 0; width: 4px; height: 74px; background: var(--ink); border-radius: 2px; }
+      #flag .cloth {
+        position: absolute; left: 4px; top: 2px; height: 40px; padding: 0 14px; display: flex; align-items: center;
+        background: var(--live); border: var(--line) solid var(--ink); border-radius: 0 8px 8px 0; box-shadow: 4px 4px 0 var(--ink);
+        font: 600 20px var(--f-body); color: var(--ink); white-space: nowrap;
+      }
+
+      /* ---- the idea: a sticky note ---- */
+      #note {
+        position: absolute; left: 282px; top: 406px; width: 176px; height: 128px; padding: 22px 18px 0;
+        background: #fff7c2; border: var(--line) solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink);
+        display: flex; flex-direction: column; gap: 12px; z-index: 5;
+      }
+      #note b { font: 600 30px/1.1 var(--f-body); color: var(--ink); white-space: nowrap; }
+      #note i { display: block; height: 3px; border-radius: 2px; background: #0f0f0f59; }
+      #note i + i { width: 64%; }
+      #pin { position: absolute; left: 76px; top: -11px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); border: 3px solid var(--paper); }
+
+      /* ---- proof: milestone ruler ---- */
+      #rulerLine { position: absolute; left: 40px; top: 638px; width: 780px; height: 4px; background: var(--ink); border-radius: 2px; }
+      .tick { position: absolute; top: 630px; width: 20px; height: 20px; margin-left: -10px; border-radius: 50%; border: 3px solid var(--ink); background: var(--paper); }
+      .mlabel { position: absolute; top: 660px; width: 180px; margin-left: -90px; text-align: center; font: 600 20px var(--f-body); color: #5c5c5c; white-space: nowrap; }
+      #marker { position: absolute; top: 626px; width: 28px; height: 28px; margin-left: -14px; border-radius: 50%; background: var(--live); border: var(--line) solid var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+
+      .headline { position: absolute; left: 80px; top: 896px; font-size: 56px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="incubation-b" data-start="0" data-duration="6.5" data-fps="30" data-width="1080" data-height="1080">
+      <section id="scene" class="clip" data-start="0" data-duration="6.5" data-track-index="0">
+        <div class="topbar" id="topbar"><span class="label">Incubation &amp; investment</span><span class="label">I2B</span></div>
+
+        <div class="sheet-paper" id="sheet" data-layout-allow-overflow="true">
+          <div class="frame"></div>
+          <div class="sheet-tag">Build plan · sheet 01</div>
+          <div class="titleblock" id="titleblock">
+            <div><span class="tb-k">Project</span></div>
+            <div><span class="tb-v">Your company</span></div>
+            <div class="tb-team" id="team">Team on day one · 4</div>
+          </div>
+
+          <!-- cue: dashed outline of the building, drawn on through masks -->
+          <svg id="outline" viewBox="0 0 860 720" aria-hidden="true" data-layout-allow-overlap="true" data-layout-allow-occlusion="true">
+            <defs>
+              <mask id="m1" maskUnits="userSpaceOnUse" x="0" y="0" width="860" height="720"><path class="mk" id="k1" d="M160 532 H580 V584 H160 Z"/></mask>
+              <mask id="m2" maskUnits="userSpaceOnUse" x="0" y="0" width="860" height="720"><path class="mk" id="k2" d="M180 532 V422 H560 V532"/></mask>
+              <mask id="m3" maskUnits="userSpaceOnUse" x="0" y="0" width="860" height="720"><path class="mk" id="k3" d="M180 422 V346 H560 V422"/></mask>
+              <mask id="m4" maskUnits="userSpaceOnUse" x="0" y="0" width="860" height="720"><path class="mk" id="k4" d="M170 346 L250 256 H490 L570 346"/></mask>
+            </defs>
+            <path class="dash" mask="url(#m1)" d="M160 532 H580 V584 H160 Z"/>
+            <path class="dash" mask="url(#m2)" d="M180 532 V422 H560 V532"/>
+            <path class="dash" mask="url(#m3)" d="M180 422 V346 H560 V422"/>
+            <path class="dash" mask="url(#m4)" d="M170 346 L250 256 H490 L570 346"/>
+          </svg>
+          <div class="slot" id="s1" style="left:160px; top:546px; width:420px;" data-layout-allow-occlusion="true">foundation</div>
+          <div class="slot" id="s2" style="left:196px; top:440px; width:90px; text-align:left;" data-layout-allow-occlusion="true">walls</div>
+          <div class="slot" id="s3" style="left:180px; top:372px; width:380px;" data-layout-allow-occlusion="true">floors</div>
+          <div class="slot" id="s4" style="left:250px; top:300px; width:240px;" data-layout-allow-occlusion="true">roof</div>
+
+          <!-- support blocks -->
+          <div class="blk lvl" id="lv3" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><small>Level 3</small><span class="wins"><i></i><i></i><i></i><i></i></span></div>
+          <div class="blk lvl" id="lv2" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><small>Level 2</small><span class="wins"><i></i><i></i><i></i><i></i></span></div>
+          <div class="blk" id="capital" data-layout-allow-overlap="true" data-layout-allow-occlusion="true">
+            <svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="13"/><path d="M21 11h-5.5a3 3 0 0 0 0 6h3a3 3 0 0 1 0 6H13"/></svg>Capital<small>pre-seed</small></div>
+          <div class="blk" id="product" data-layout-allow-overlap="true" data-layout-allow-occlusion="true">Product &amp; design</div>
+          <div class="blk" id="eng" data-layout-allow-overlap="true" data-layout-allow-occlusion="true">
+            <svg viewBox="0 0 34 34"><path d="M11 10l-7 7 7 7M23 10l7 7-7 7M19 7l-4 20"/></svg>Engineering<small>AI · cloud</small></div>
+          <div id="roof" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true">
+            <svg class="shape" viewBox="0 0 406 96" aria-hidden="true">
+              <polygon points="6,96 406,96 326,6 86,6" fill="#0f0f0f"/>
+              <polygon points="1.5,90 398.5,90 319,1.5 81,1.5" fill="#2ecf9a" stroke="#0f0f0f" stroke-width="3" stroke-linejoin="round"/>
+            </svg>
+            <div class="roof-label"><svg viewBox="0 0 30 30"><path d="M15 3l10 4v7c0 7-5 11-10 13C10 25 5 21 5 14V7z"/><path d="M10 15l4 4 6-7"/></svg>Governance</div>
+            <div id="flag"><span class="pole"></span><span class="cloth">Company</span></div>
+          </div>
+
+          <!-- the idea -->
+          <div id="note" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><span id="pin"></span><b>Your idea</b><i></i><i></i></div>
+
+          <!-- proof: milestone ruler -->
+          <div id="rulerLine"></div>
+          <span class="tick" style="left:80px"></span><span class="tick" style="left:245px"></span><span class="tick" style="left:410px"></span><span class="tick" style="left:590px"></span><span class="tick" style="left:770px"></span>
+          <span class="mlabel" style="left:80px">Idea</span><span class="mlabel" style="left:245px">Prototype</span><span class="mlabel" style="left:410px">v1</span><span class="mlabel" style="left:590px">First customers</span><span class="mlabel" style="left:770px">Next round</span>
+          <span id="marker" style="left:80px" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"></span>
+        </div>
+
+        <div class="headline" id="headline">Your idea, with a team behind it.</div>
+      </section>
+    </div>
+
+    <script>
+      // later fromTo tweens apply their "from" state only when reached; t=0 state comes from the sets below
+      const tl = gsap.timeline({ paused: true, defaults: { immediateRender: false } });
+      const $ = s => document.querySelector(s);
+      const $$ = s => Array.from(document.querySelectorAll(s));
+
+      // ---- static values, measured before any tween (deterministic) ----
+      const masks = ["#k1", "#k2", "#k3", "#k4"].map($);
+      const lens = masks.map(p => p.getTotalLength());
+      const slots = ["#s1", "#s2", "#s3", "#s4"].map($);
+      const ticks = $$(".tick"), mlabels = $$(".mlabel");
+      const ROOF_DROP = 128; // roof sits two floors lower until the building grows
+
+      tl.set(masks, { strokeDasharray: i => lens[i], strokeDashoffset: i => lens[i], immediateRender: true }, 0);
+      tl.set(["#topbar", "#sheet", ...slots, "#lv2", "#lv3", "#capital", "#product", "#eng", "#roof", "#flag", "#team", "#rulerLine", ...ticks, ...mlabels, "#marker", "#note", "#headline"], { autoAlpha: 0, immediateRender: true }, 0);
+      tl.set("#roof", { y: ROOF_DROP, immediateRender: true }, 0);
+      tl.set("#pin", { scale: 0, immediateRender: true }, 0);
+
+      // ---- BEFORE: the sheet unrolls, an idea is pinned on it, alone ----
+      tl.fromTo("#topbar", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, ease: "sine.out" }, 0.1);
+      tl.fromTo("#sheet", { autoAlpha: 0, y: 70, rotation: -4, clipPath: "inset(-20px -20px 100% -20px)" },
+        { autoAlpha: 1, y: 0, rotation: -1.2, clipPath: "inset(-20px -20px -20px -20px)", duration: 0.75, ease: "expo.out" }, 0.2);
+      tl.fromTo("#note", { autoAlpha: 0, y: -300, rotation: -16 }, { autoAlpha: 1, y: 0, rotation: -4, duration: 0.5, ease: "back.out(1.4)" }, 0.72);
+      tl.fromTo("#pin", { scale: 0 }, { scale: 1, duration: 0.18, ease: "back.out(3)" }, 1.12);
+
+      // ---- CUE: a dashed building outline draws on around the idea ----
+      masks.forEach((m, i) => tl.to(m, { strokeDashoffset: 0, duration: 0.42, ease: "power2.inOut" }, 1.3 + i * 0.1));
+      slots.forEach((s, i) => tl.fromTo(s, { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "sine.out" }, 1.45 + i * 0.1));
+
+      // ---- CHANGE: four kinds of support fill the slots, one at a time ----
+      // capital: foundation slides in from the left and settles
+      tl.fromTo("#capital", { autoAlpha: 0, x: -560 }, { autoAlpha: 1, x: 0, duration: 0.38, ease: "power4.out" }, 1.95);
+      tl.fromTo("#capital", { scaleX: 1 }, { scaleX: 0.97, duration: 0.06, ease: "power1.out", yoyo: true, repeat: 1, transformOrigin: "0% 50%" }, 2.31);
+      // product & design: walls rise from the foundation; the idea becomes the sign on the building
+      tl.fromTo("#product", { autoAlpha: 1, scaleY: 0, transformOrigin: "50% 100%" }, { autoAlpha: 1, scaleY: 1, duration: 0.42, ease: "back.out(1.7)" }, 2.3);
+      tl.to("#note", { x: 108, y: 7, scale: 0.66, rotation: 3, duration: 0.48, ease: "power3.inOut" }, 2.28);
+      // engineering: a floor drops in from above, squashes, settles
+      tl.fromTo("#eng", { autoAlpha: 1, y: -420 }, { y: 0, duration: 0.34, ease: "power2.in" }, 2.66);
+      tl.fromTo("#eng", { scaleY: 1, scaleX: 1 }, { scaleY: 0.8, scaleX: 1.04, duration: 0.07, ease: "power1.out", transformOrigin: "50% 100%" }, 3.0);
+      tl.to("#eng", { scaleY: 1, scaleX: 1, duration: 0.36, ease: "elastic.out(1, 0.45)" }, 3.07);
+      // governance: the roof swings down onto the top
+      tl.fromTo("#roof", { autoAlpha: 1, y: ROOF_DROP - 360, rotation: -9 }, { y: ROOF_DROP, rotation: 0, duration: 0.42, ease: "back.out(1.3)" }, 3.02);
+      tl.to("#outline", { autoAlpha: 0, duration: 0.3, ease: "sine.in" }, 3.4);
+      tl.to(slots, { autoAlpha: 0, duration: 0.2, ease: "sine.in" }, 3.4);
+
+      // ---- PROOF: the building grows, a flag goes up, milestones light ----
+      tl.to("#roof", { y: 0, duration: 0.5, ease: "power3.inOut" }, 3.5);
+      tl.fromTo("#lv2", { autoAlpha: 1, scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.3, ease: "power2.out" }, 3.52);
+      tl.fromTo("#lv3", { autoAlpha: 1, scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.3, ease: "circ.out" }, 3.72);
+      tl.to("#lv2 .wins i", { backgroundColor: "#6ae3ff", duration: 0.1, stagger: 0.05, ease: "none" }, 3.85);
+      tl.to("#lv3 .wins i", { backgroundColor: "#6ae3ff", duration: 0.1, stagger: 0.05, ease: "none" }, 4.0);
+      tl.fromTo("#flag", { autoAlpha: 1, scaleY: 0, transformOrigin: "0% 100%" }, { scaleY: 1, duration: 0.32, ease: "back.out(2.2)" }, 3.98);
+
+      tl.fromTo("#rulerLine", { autoAlpha: 1, scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.6, ease: "power2.out" }, 3.55);
+      ticks.forEach((t, k) => tl.fromTo(t, { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: 0.16, ease: "back.out(2)" }, 3.6 + k * 0.1));
+      tl.to(mlabels, { autoAlpha: 1, duration: 0.25, stagger: 0.06, ease: "sine.out" }, 3.65);
+      tl.fromTo("#marker", { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: 0.2, ease: "back.out(2.4)" }, 3.75);
+      tl.to(ticks[0], { backgroundColor: "#2ecf9a", duration: 0.1, ease: "none" }, 3.9);
+      tl.to(mlabels[0], { color: "#0f0f0f", duration: 0.1, ease: "none" }, 3.9);
+      // marker hops tick to tick (pose-to-pose); each milestone lights as it arrives
+      tl.to("#marker", { x: 165, duration: 0.2, ease: "power2.inOut" }, 3.92);
+      tl.to("#marker", { x: 330, duration: 0.2, ease: "power2.inOut" }, 4.16);
+      tl.to("#marker", { x: 510, duration: 0.2, ease: "power2.inOut" }, 4.40);
+      tl.to("#marker", { x: 690, duration: 0.2, ease: "power2.inOut" }, 4.64);
+      [4.12, 4.36, 4.60].forEach((t, i) => tl.to(ticks[i + 1], { backgroundColor: "#2ecf9a", duration: 0.1, ease: "none" }, t));
+      [4.12, 4.36, 4.60, 4.84].forEach((t, i) => tl.to(mlabels[i + 1], { color: "#0f0f0f", duration: 0.1, ease: "none" }, t));
+      tl.fromTo("#team", { autoAlpha: 0, x: 20 }, { autoAlpha: 1, x: 0, duration: 0.3, ease: "expo.out" }, 4.85);
+
+      // ---- HOLD ----
+      tl.fromTo("#headline", { autoAlpha: 0, x: -30 }, { autoAlpha: 1, x: 0, duration: 0.7, ease: "expo.out" }, 5.0);
+
+      window.__timelines["incubation-b"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

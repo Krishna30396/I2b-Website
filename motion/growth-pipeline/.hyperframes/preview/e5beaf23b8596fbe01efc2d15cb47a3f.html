@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script data-hf-gsap-fallback>
+(function(){
+  var cdnBase="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/";
+  var loaded={};
+  function loadFallback(file){
+    if(loaded[file])return loaded[file];
+    return loaded[file]=new Promise(function(ok,fail){
+      var s=document.createElement("script");
+      s.src=cdnBase+file;s.hfGsapFallback=true;s.onload=ok;s.onerror=fail;
+      document.head.appendChild(s);
+    });
+  }
+  document.addEventListener("error",function(e){
+    var t=e.target;
+    if(!t||t.tagName!=="SCRIPT"||!t.src||t.hfGsapFallback)return;
+    var m=t.src.match(/gsap[^/]*\/dist\/(.+\.js)/);
+    if(m)loadFallback(m[1]).catch(function(){
+      reportError(new Error("GSAP could not load from "+t.src+" or "+cdnBase+m[1]+", so this preview's animations will not play."));
+    });
+  },true);
+})();
+</script>
+<meta name="hyperframes-studio-preview"><script>(function(){var seen=window.__hfPreviewErrors=[];
+addEventListener("error",function(e){seen.push(e.message||String(e))});})();</script>
+<base href="/api/projects/growth-pipeline/preview/"><style data-hyperframes-text-rendering="true">html,body,*{text-rendering:geometricPrecision}</style><script data-hf-after-fonts-fallback="">document.addEventListener("DOMContentLoaded", function () {
+  if (window.__hfAfterFontsClaimed) return;
+  var T = "text/hf-after-fonts";
+  var all = [].slice.call(document.querySelectorAll('script[type="text/hf-after-fonts"], script[type="text/hf-after-fonts+module"]'));
+  if (!all.length) return;
+  console.warn("[hyperframes] the runtime has no web-font gate; composition scripts run without waiting for fonts");
+  var late = function (el) { return el.type !== T || el.matches('[defer][src], [defer][data-hf-inlined-src]'); };
+  var queue = all.filter(function (el) { return !late(el); }).concat(all.filter(late));
+  (function next() {
+    var el = queue.shift();
+    if (!el) return;
+    var s = document.createElement("script");
+    for (var i = 0; i < el.attributes.length; i++) s.setAttribute(el.attributes[i].name, el.attributes[i].value);
+    if (el.type === T) s.removeAttribute("type"); else s.type = "module";
+    s.async = el.hasAttribute("async");
+    s.text = el.text;
+    var waits = s.type !== "module" && s.hasAttribute("src") && !s.async && !s.noModule;
+    if (waits) { s.addEventListener("load", next); s.addEventListener("error", next); }
+    el.replaceWith(s);
+    if (!waits) next();
+  })();
+});
+//# sourceURL=hyperframes://after-fonts-fallback</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, height=1080">
+    <title>I2B · AI-led consumer & growth · The phone</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>/* I2B Object System — shared object library (see ../DESIGN-SYSTEM.md).
+   Synced into each project as assets/i2b-objects.css by system/sync.mjs. */
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-600.woff2") format("woff2"); font-weight: 600; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-500.woff2") format("woff2"); font-weight: 500; }
+@font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+
+:root {
+  --ink: #0f0f0f;
+  --paper: #fafaf9;
+  --ground-light: #f3f2ef;
+  --ground-night: #0a0d14;
+  --live: #6ae3ff;
+  --c-mail: #1c75bc;
+  --c-sheet: #2ecf9a;
+  --c-chat: #b49ef5;
+  --c-invoice: #fcbb00;
+  --line: 3px;
+  --shadow: 6px 6px 0 var(--ink);
+  --f-body: "Inter", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, monospace;
+  --f-display: "Fraunces", Georgia, serif;
+}
+
+/* ---------- artefacts (the mess) ---------- */
+.art {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px 20px 22px;
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  font: 600 24px/1.2 var(--f-body);
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.art::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: var(--tc); border-right: var(--line) solid var(--ink); }
+.art .ico { width: 44px; height: 44px; margin-left: 14px; flex-shrink: 0; }
+.art .ico svg { width: 100%; height: 100%; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.art .ico svg .fillc { fill: var(--tc); }
+.art small { display: block; font: 500 16px var(--f-mono); color: #0f0f0fbf; margin-top: 4px; }
+.art.sheet { --tc: var(--c-sheet); }
+.art.mail { --tc: var(--c-mail); }
+.art.chat { --tc: var(--c-chat); border-radius: 26px 26px 26px 6px; }
+.art.invoice { --tc: var(--c-invoice); }
+
+/* ---------- units (the scale) ---------- */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 64px;
+  padding: 0 22px;
+  border-top: 2px solid var(--ink);
+  font: 600 22px var(--f-body);
+  color: var(--ink);
+  background: var(--paper);
+  white-space: nowrap;
+}
+.row .meta { font-weight: 400; color: #0f0f0fb3; }
+.row .dot { margin-left: auto; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); background: #d9dbe0; }
+.chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 70px; height: 32px; padding: 0 10px;
+  border: 2px solid var(--ink); border-radius: 999px;
+  font: 500 15px var(--f-mono); letter-spacing: .04em; color: var(--ink);
+  background: var(--tc);
+}
+.chip.sheet { --tc: var(--c-sheet); } .chip.mail { --tc: var(--c-mail); color: var(--paper); }
+.chip.chat { --tc: var(--c-chat); } .chip.invoice { --tc: var(--c-invoice); }
+
+.block {
+  display: flex; align-items: center; gap: 14px;
+  height: 58px; padding: 0 18px;
+  background: var(--paper); border: var(--line) solid var(--ink); border-radius: 12px;
+  box-shadow: 4px 4px 0 var(--ink);
+  font: 600 20px var(--f-body); color: var(--ink); white-space: nowrap;
+}
+.block .dot { margin-left: auto; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--ink); background: var(--c-sheet); }
+
+/* ---------- systems (the one) ---------- */
+.panel {
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px; padding: 0 24px;
+  background: var(--live); border-bottom: var(--line) solid var(--ink);
+  font: 600 26px var(--f-body); color: var(--ink);
+}
+.panel-head .live { display: inline-flex; align-items: center; gap: 8px; font: 500 16px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+.panel-head .live::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
+
+.label {
+  font: 500 22px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink);
+}
+.headline { font: 400 64px/1.05 var(--f-display); font-style: italic; letter-spacing: -.02em; color: var(--ink); }
+
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-600.woff2") format("woff2"); font-weight: 600; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-500.woff2") format("woff2"); font-weight: 500; }
+      @font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1080px; overflow: hidden; background: var(--ground-light); }
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        background-color: var(--ground-light);
+        background-image: radial-gradient(#0f0f0f1f 1.6px, transparent 1.6px);
+        background-size: 36px 36px;
+        font-family: "Inter", system-ui, sans-serif; color: var(--ink);
+      }
+      #scene { position: absolute; inset: 0; }
+      .topbar { position: absolute; left: 80px; right: 80px; top: 72px; display: flex; justify-content: space-between; }
+
+      /* ---------- the phone (container = context) ---------- */
+      .phone {
+        position: absolute; left: 120px; top: 170px; width: 400px; height: 720px;
+        background: var(--paper); border: var(--line) solid var(--ink); border-radius: 48px;
+        box-shadow: 8px 8px 0 var(--ink); z-index: 2;
+      }
+      .notch { position: absolute; left: 50%; top: 16px; width: 120px; height: 22px; margin-left: -60px; border-radius: 999px; background: var(--ink); }
+      .screen {
+        position: absolute; left: 16px; right: 16px; top: 52px; bottom: 16px;
+        background: var(--ground-light); border: 2px solid var(--ink); border-radius: 30px; overflow: hidden;
+      }
+      .s-top { position: absolute; left: 16px; right: 16px; top: 16px; }
+      .s-title { display: flex; align-items: center; gap: 12px; font: 600 24px var(--f-body); white-space: nowrap; }
+      .badge {
+        display: inline-flex; align-items: center; justify-content: center; min-width: 36px; height: 34px; padding: 0 8px;
+        border: 2px solid var(--ink); border-radius: 999px; background: var(--c-invoice); font: 500 18px var(--f-mono);
+      }
+      .progress { display: flex; align-items: center; gap: 10px; margin-top: 10px; font: 500 18px var(--f-mono); color: #0f0f0fd9; white-space: nowrap; }
+      .progress svg { width: 34px; height: 34px; overflow: visible; }
+      .progress circle { fill: none; }
+      #listview { position: absolute; left: 0; right: 0; top: 104px; bottom: 0; overflow: hidden; }
+      #rows { position: absolute; left: 12px; right: 12px; top: 0; height: 560px; }
+      .task {
+        position: absolute; left: 0; right: 0; height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px;
+        background: var(--paper); border: 2px solid var(--ink); border-radius: 10px;
+        font: 600 21px var(--f-body); white-space: nowrap; overflow: hidden;
+      }
+      .task .cb { position: relative; width: 24px; height: 24px; flex-shrink: 0; border: 2px solid var(--ink); border-radius: 6px; background: var(--paper); }
+      .task .cb svg { position: absolute; inset: -2px; width: 24px; height: 24px; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .scan { position: absolute; left: 6px; right: 6px; top: 98px; height: 12px; z-index: 5; }
+      .scan .bar { position: absolute; left: 0; right: 0; top: 0; height: 12px; background: var(--c-chat); border: 2px solid var(--ink); border-radius: 6px; }
+      .scan .chip { position: absolute; right: 10px; top: -36px; min-width: 52px; height: 30px; font-size: 16px; }
+
+      /* the one suggestion */
+      .suggest {
+        position: absolute; left: 12px; right: 12px; z-index: 6;
+        padding: 22px 20px 22px; background: var(--paper);
+        border: var(--line) solid var(--ink); border-radius: 18px; box-shadow: var(--shadow);
+      }
+      .suggest .chip { height: 34px; padding: 0 14px; font-size: 18px; }
+      .suggest .s-head { margin-top: 16px; font: 600 28px/1.15 var(--f-body); letter-spacing: -.01em; }
+      .suggest .s-why { margin-top: 10px; font: 400 19px/1.35 var(--f-body); color: #0f0f0fd9; }
+      .apply {
+        position: relative; margin-top: 20px; height: 58px; display: flex; align-items: center; justify-content: center; gap: 10px;
+        background: var(--live); border: var(--line) solid var(--ink); border-radius: 14px; box-shadow: 4px 4px 0 var(--ink);
+        font: 600 23px var(--f-body);
+      }
+      .apply .lbl { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+      .apply svg { width: 24px; height: 24px; fill: none; stroke: var(--ink); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+
+      .cursor { position: absolute; left: 0; top: 0; width: 44px; height: 50px; z-index: 20; filter: drop-shadow(4px 4px 0 #0f0f0f); }
+      .cursor svg { width: 100%; height: 100%; fill: var(--paper); stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
+
+      /* ---------- the chart card (proof) ---------- */
+      .chart {
+        position: absolute; left: 590px; top: 240px; width: 404px; padding: 22px 22px 18px;
+        background: var(--paper); border: var(--line) solid var(--ink); border-radius: 22px; box-shadow: 8px 8px 0 var(--ink); z-index: 2;
+      }
+      .ch-head { display: flex; justify-content: space-between; align-items: flex-start; height: 64px; }
+      .ch-title { font: 600 26px var(--f-body); }
+      .ch-sub { display: block; margin-top: 4px; font: 500 18px var(--f-mono); color: #0f0f0fbf; }
+      .ch-foot { margin-top: 14px; height: 44px; display: flex; align-items: center; }
+      .metric { height: 42px; padding: 0 16px; white-space: nowrap; font-size: 20px; background: var(--live); }
+      #plot { display: block; width: 356px; height: 230px; overflow: visible; margin-top: 8px; }
+      #plot .axis { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+      #plot .line { fill: none; stroke: var(--c-mail); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+      #plot .mark { fill: none; stroke: var(--ink); stroke-width: 3; stroke-dasharray: 8 8; }
+      #plot text { font: 500 18px var(--f-mono); fill: var(--ink); }
+
+      .headline { position: absolute; left: 590px; top: 680px; width: 410px; }
+      .headline span { display: block; }</style>
+    
+  
+<script data-hyperframes-preview-runtime="1" src="/api/runtime.js"></script>
+<meta name="hyperframes-project-signature" content="2e15c3815ed0a74f44067aa0">
+</head>
+  <body>
+    <div data-hf-id="hf-5ezj" id="root" data-composition-id="growth-b" data-start="0" data-duration="6.5" data-fps="30" data-width="1080" data-height="1080">
+      <section data-hf-id="hf-0kdj" id="scene" class="clip" data-start="0" data-duration="6.5" data-track-index="0">
+        <div data-hf-id="hf-82kq" class="topbar" id="topbar"><span data-hf-id="hf-87yu" class="label">AI-led consumer &amp; growth</span><span data-hf-id="hf-hfqg" class="label">I2B</span></div>
+
+        <!-- PHONE -->
+        <div data-hf-id="hf-t7sa" class="phone" id="phone">
+          <div data-hf-id="hf-8kjy" class="notch"></div>
+          <div data-hf-id="hf-ylue" class="screen" id="screen">
+            <div data-hf-id="hf-lq85" class="s-top">
+              <div data-hf-id="hf-h41t" class="s-title">Today · Growth <span data-hf-id="hf-trds" class="badge" id="badge">10</span></div>
+              <div data-hf-id="hf-31j5" class="progress">
+                <svg data-hf-id="hf-054f" viewBox="0 0 34 34"><circle data-hf-id="hf-4v0z" cx="17" cy="17" r="13" stroke="#0f0f0f26" stroke-width="7" /><circle data-hf-id="hf-22ja" id="ringFill" cx="17" cy="17" r="13" stroke="#6ae3ff" stroke-width="7" transform="rotate(-90 17 17)" /><circle data-hf-id="hf-1j5e" cx="17" cy="17" r="17" stroke="#0f0f0f" stroke-width="2" /><circle data-hf-id="hf-djkn" cx="17" cy="17" r="9" stroke="#0f0f0f" stroke-width="2" /></svg>
+                <span data-hf-id="hf-9bea" id="ringTxt">0 / 10 done</span>
+              </div>
+            </div>
+            <div data-hf-id="hf-t2x2" id="listview"><div data-hf-id="hf-v4kb" id="rows" data-layout-allow-overflow="true">
+              <div data-hf-id="hf-iw4p" class="task" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-3rhy" class="cb"><svg data-hf-id="hf-ulu9" viewBox="0 0 24 24"><path data-hf-id="hf-6djh" class="tk" d="M6 12.5l4 4 8-9" /></svg></span>Pull last week's data</div>
+              <div data-hf-id="hf-xhky" class="task" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-d8pm" class="cb"><svg data-hf-id="hf-1tol" viewBox="0 0 24 24"><path data-hf-id="hf-vw3l" class="tk" d="M6 12.5l4 4 8-9" /></svg></span>Compare vs last month</div>
+              <div data-hf-id="hf-jx1o" class="task" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-dn0n" class="cb"><svg data-hf-id="hf-30lo" viewBox="0 0 24 24"><path data-hf-id="hf-x30o" class="tk" d="M6 12.5l4 4 8-9" /></svg></span>Check spend by channel</div>
+              <div data-hf-id="hf-0rel" class="task" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-e1bo" class="cb"><svg data-hf-id="hf-2man" viewBox="0 0 24 24"><path data-hf-id="hf-wopn" class="tk" d="M6 12.5l4 4 8-9" /></svg></span>Segment by cohort</div>
+              <div data-hf-id="hf-j11h" class="task" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-efmp" class="cb"><svg data-hf-id="hf-3t7q" viewBox="0 0 24 24"><path data-hf-id="hf-up6i" class="tk" d="M6 12.5l4 4 8-9" /></svg></span>Find the top campaign</div>
+              <div data-hf-id="hf-2nbk" class="task" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-etxq" class="cb"><svg data-hf-id="hf-3ewp" viewBox="0 0 24 24"><path data-hf-id="hf-uavh" class="tk" d="M6 12.5l4 4 8-9" /></svg></span>Check conversion rate</div>
+              <div data-hf-id="hf-5mf0" class="task" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-f88r" class="cb"><svg data-hf-id="hf-4lts" viewBox="0 0 24 24"><path data-hf-id="hf-vhsk" class="tk" d="M6 12.5l4 4 8-9" /></svg></span>Flag weak channels</div>
+              <div data-hf-id="hf-9xmt" class="task" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-fmjs" class="cb"><svg data-hf-id="hf-47ir" viewBox="0 0 24 24"><path data-hf-id="hf-v3hj" class="tk" d="M6 12.5l4 4 8-9" /></svg></span>Model a budget shift</div>
+              <div data-hf-id="hf-9dsy" class="task" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-g0ut" class="cb"><svg data-hf-id="hf-z1je" viewBox="0 0 24 24"><path data-hf-id="hf-zguu" class="tk" d="M6 12.5l4 4 8-9" /></svg></span>Write the summary</div>
+              <div data-hf-id="hf-geob" class="task" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-gf5u" class="cb"><svg data-hf-id="hf-yn8d" viewBox="0 0 24 24"><path data-hf-id="hf-z2jt" class="tk" d="M6 12.5l4 4 8-9" /></svg></span>Send to the team</div>
+            </div></div>
+            <div data-hf-id="hf-etrr" class="scan" id="scan" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><span data-hf-id="hf-oya5" class="chip chat">AI</span><div data-hf-id="hf-ufsv" class="bar"></div></div>
+
+            <div data-hf-id="hf-cebs" class="suggest" id="card" data-layout-allow-overlap="true" data-layout-allow-occlusion="true">
+              <span data-hf-id="hf-351f" class="chip chat">Do this next</span>
+              <p data-hf-id="hf-bmgb" class="s-head">Move budget to Campaign A</p>
+              <p data-hf-id="hf-2ecg" class="s-why">Why: it converted best this week</p>
+              <div data-hf-id="hf-53yi" class="apply" id="apply">
+                <span data-hf-id="hf-6ztz" class="lbl" id="lblApply">Apply</span>
+                <span data-hf-id="hf-l8bw" class="lbl" id="lblDone">Applied <svg data-hf-id="hf-lxbj" viewBox="0 0 24 24"><path data-hf-id="hf-pj5w" d="M4 12.5l5 5 11-11" /></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHART -->
+        <div data-hf-id="hf-70cy" class="chart" id="chart">
+          <div data-hf-id="hf-sun8" class="ch-head">
+            <div data-hf-id="hf-yeow"><span data-hf-id="hf-3yxq" class="ch-title">Conversions</span><span data-hf-id="hf-eai9" class="ch-sub">Last 14 days</span></div>
+          </div>
+          <svg data-hf-id="hf-kn7e" id="plot" viewBox="0 0 356 230" aria-hidden="true">
+            <path data-hf-id="hf-2wfi" class="axis" d="M14 12V214H350" />
+            <path data-hf-id="hf-4b5s" class="mark" id="mark" d="M176 34V212" />
+            <text data-hf-id="hf-aogo" id="markTxt" x="186" y="38">Applied</text>
+            <path data-hf-id="hf-spu8" class="line" id="before" d="M22 176L46 170L70 178L94 171L118 177L142 170L176 174" />
+            <path data-hf-id="hf-oznf" class="line" id="after" d="M176 174C214 172 240 150 266 112S318 40 340 30" />
+            <circle data-hf-id="hf-bbqm" id="endDot" cx="340" cy="30" r="9" fill="#6ae3ff" stroke="#0f0f0f" stroke-width="3" />
+          </svg>
+          <div data-hf-id="hf-7er2" class="ch-foot"><span data-hf-id="hf-ly11" class="chip metric" id="metric">10 steps → 1 tap</span></div>
+        </div>
+
+        <div data-hf-id="hf-m8a3" class="cursor" id="cursor" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true"><svg data-hf-id="hf-cjh6" viewBox="0 0 44 50"><path data-hf-id="hf-7ylw" d="M5 3V38L14 30L20 45L27 42L21 27H33Z" /></svg></div>
+
+        <div data-hf-id="hf-icoi" class="headline" id="headline"><span data-hf-id="hf-i7af">Ten steps.</span><span data-hf-id="hf-90xw">One good</span><span data-hf-id="hf-r5ml">suggestion.</span></div>
+      </section>
+    </div>
+
+    
+  <script type="text/hf-after-fonts">const tl = gsap.timeline({ paused: true });
+const S = document.getElementById("root");
+const box = (el) => {
+  const r = el.getBoundingClientRect(), s = S.getBoundingClientRect();
+  return { l: r.left - s.left, t: r.top - s.top, w: r.width, h: r.height, cx: r.left - s.left + r.width / 2, cy: r.top - s.top + r.height / 2 };
+};
+const tasks = Array.from(document.querySelectorAll(".task"));
+const PITCH = 56;
+tasks.forEach((t, k) => {
+  t.style.top = k * PITCH + "px";
+});
+const ticks = tasks.map((t) => t.querySelector(".tk"));
+const card = document.getElementById("card");
+const screenH = document.getElementById("screen").clientHeight;
+const LIST_TOP = 104;
+const visible = screenH - LIST_TOP;
+card.style.top = Math.round(LIST_TOP + (visible - card.offsetHeight) / 2) + "px";
+const cardMidInRows = card.offsetTop + card.offsetHeight / 2 - LIST_TOP;
+const BTN = box(document.getElementById("apply"));
+const cursor = document.getElementById("cursor");
+const CUR_TIP = { x: BTN.cx + 24 - 5, y: BTN.cy + 6 - 3 };
+cursor.style.left = CUR_TIP.x + "px";
+cursor.style.top = CUR_TIP.y + "px";
+const ringFill = document.getElementById("ringFill");
+const RING = 2 * Math.PI * 13;
+const before = document.getElementById("before"), after = document.getElementById("after"), mark = document.getElementById("mark");
+const LB = before.getTotalLength(), LA = after.getTotalLength(), LM = 178;
+tl.set(ringFill, { attr: { "stroke-dasharray": RING, "stroke-dashoffset": RING }, immediateRender: true }, 0);
+tl.set(ticks, { opacity: 0, immediateRender: true }, 0);
+tl.set(["#card", "#scan", "#cursor", "#lblDone", "#metric", "#markTxt", "#endDot"], { autoAlpha: 0, immediateRender: true }, 0);
+tl.set(after, { strokeDasharray: LA, strokeDashoffset: LA, opacity: 0, immediateRender: true }, 0);
+tl.set(before, { strokeDasharray: LB, strokeDashoffset: LB, opacity: 0, immediateRender: true }, 0);
+tl.set(mark, { strokeDasharray: "8 8", strokeDashoffset: 0, opacity: 0, immediateRender: true }, 0);
+tl.fromTo("#topbar", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, ease: "sine.out" }, 0.1);
+tl.fromTo("#phone", { autoAlpha: 0, y: 140, rotation: -4 }, { autoAlpha: 1, y: 0, rotation: 0, duration: 0.9, ease: "expo.out" }, 0.2);
+tl.fromTo(tasks, { autoAlpha: 0, x: -18 }, { autoAlpha: 1, x: 0, duration: 0.32, ease: "power2.out", stagger: 0.045 }, 0.5);
+tl.fromTo("#badge", { scale: 0.3 }, { scale: 1, duration: 0.45, ease: "back.out(2.6)" }, 0.95);
+tl.fromTo("#rows", { y: 0 }, { y: -40, duration: 0.22, ease: "power2.out" }, 1.08);
+tl.to("#rows", { y: 0, duration: 0.3, ease: "back.out(2)" }, 1.3);
+tl.fromTo("#chart", { autoAlpha: 0, x: 50 }, { autoAlpha: 1, x: 0, duration: 0.7, ease: "circ.out" }, 0.75);
+tl.set(before, { opacity: 1 }, 1);
+tl.to(before, { strokeDashoffset: 0, duration: 0.6, ease: "none" }, 1);
+const SCAN_FROM = LIST_TOP - 6, SCAN_TO = screenH - 18;
+tl.fromTo("#scan", { autoAlpha: 0, y: 0 }, { autoAlpha: 1, duration: 0.12, ease: "none" }, 1.43);
+tl.to("#scan", { y: SCAN_TO - SCAN_FROM, duration: 0.7, ease: "power1.inOut" }, 1.45);
+tasks.forEach((t, k) => {
+  const rowMid = LIST_TOP + k * PITCH + 24;
+  const frac = Math.min(1, (rowMid - SCAN_FROM) / (SCAN_TO - SCAN_FROM));
+  tl.to(ticks[k], { opacity: 0.5, duration: 0.12, ease: "none" }, 1.45 + frac * 0.7);
+  tl.to(t.querySelector(".cb"), { backgroundColor: "#b49ef5", duration: 0.12, ease: "none" }, 1.45 + frac * 0.7);
+});
+tl.to("#scan", { autoAlpha: 0, duration: 0.15, ease: "power1.in" }, 2.15);
+tasks.forEach((t, k) => {
+  const rowMid = k * PITCH + 24;
+  const dist = Math.abs(rowMid - cardMidInRows);
+  const delay = 2.3 + (300 - Math.min(dist, 300)) / 300 * 0.12;
+  tl.to(t, { y: cardMidInRows - rowMid, scaleY: 0.3, scaleX: 0.94, duration: 0.5, ease: "power2.inOut" }, delay);
+  tl.to(t, { autoAlpha: 0, duration: 0.08, ease: "none" }, delay + 0.48);
+});
+tl.fromTo("#card", { autoAlpha: 0, scaleY: 0.14, scaleX: 0.94 }, { autoAlpha: 1, scaleY: 1, scaleX: 1, duration: 0.55, ease: "back.out(1.7)" }, 2.78);
+const badge = document.getElementById("badge"), ringTxt = document.getElementById("ringTxt");
+const state = { s: 0 };
+const paint = () => {
+  badge.textContent = state.s >= 1 ? "1" : "10";
+  ringTxt.textContent = state.s >= 2 ? "1 / 1 done" : state.s >= 1 ? "0 / 1 done" : "0 / 10 done";
+};
+tl.to(state, { s: 1, duration: 0.01, ease: "none", onUpdate: paint }, 2.82);
+tl.fromTo("#badge", { scale: 1 }, { scale: 1.25, duration: 0.12, ease: "sine.out", yoyo: true, repeat: 1, immediateRender: false }, 2.82);
+tl.fromTo("#cursor", { autoAlpha: 0, x: 120, y: 150 }, { autoAlpha: 1, x: 0, y: 0, duration: 0.45, ease: "power3.out" }, 3.12);
+tl.to("#cursor", { scale: 0.86, duration: 0.07, ease: "power1.in", transformOrigin: "5px 3px" }, 3.6);
+tl.to("#apply", { x: 3, y: 4, boxShadow: "0px 0px 0 #0f0f0f", duration: 0.07, ease: "power1.in" }, 3.6);
+tl.to("#cursor", { scale: 1, duration: 0.14, ease: "back.out(2)" }, 3.68);
+tl.to("#apply", { x: 0, y: 0, boxShadow: "4px 4px 0 #0f0f0f", duration: 0.16, ease: "back.out(2)" }, 3.68);
+tl.to("#lblApply", { autoAlpha: 0, y: -10, duration: 0.1, ease: "power2.in" }, 3.66);
+tl.fromTo("#lblDone", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out" }, 3.7);
+tl.to(state, { s: 2, duration: 0.01, ease: "none", onUpdate: paint }, 3.72);
+tl.to(ringFill, { attr: { "stroke-dashoffset": 0 }, duration: 0.35, ease: "power2.out" }, 3.72);
+tl.to("#cursor", { autoAlpha: 0, x: 60, y: 70, duration: 0.3, ease: "power2.in" }, 3.92);
+tl.fromTo("#chart", { scale: 1 }, { scale: 1.03, duration: 0.16, ease: "sine.out", yoyo: true, repeat: 1, immediateRender: false }, 3.74);
+tl.fromTo(mark, { opacity: 1, strokeDashoffset: 0, scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.25, ease: "expo.out" }, 3.77);
+tl.fromTo("#markTxt", { autoAlpha: 0, x: -10 }, { autoAlpha: 1, x: 0, duration: 0.25, ease: "power2.out" }, 3.87);
+tl.set(after, { opacity: 1 }, 3.8);
+tl.to(after, { strokeDashoffset: 0, duration: 0.85, ease: "power1.out" }, 3.8);
+tl.fromTo("#endDot", { autoAlpha: 0, scale: 0, transformOrigin: "50% 50%" }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(3)" }, 4.7);
+tl.fromTo("#metric", { autoAlpha: 0, scale: 0.5, rotation: -8 }, { autoAlpha: 1, scale: 1, rotation: -2, duration: 0.5, ease: "elastic.out(1, 0.55)" }, 4.37);
+tl.fromTo("#headline span", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "expo.out", stagger: 0.09 }, 5.05);
+window.__timelines["growth-b"] = tl;
+tl.seek(0);</script></body>
+</html>

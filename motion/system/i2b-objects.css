@@ -1,0 +1,105 @@
+/* I2B Object System — shared object library (see ../DESIGN-SYSTEM.md).
+   Synced into each project as assets/i2b-objects.css by system/sync.mjs. */
+@font-face { font-family: "Inter"; src: url("fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter-600.woff2") format("woff2"); font-weight: 600; }
+@font-face { font-family: "JetBrains Mono"; src: url("fonts/JetBrainsMono-500.woff2") format("woff2"); font-weight: 500; }
+@font-face { font-family: "Fraunces"; src: url("fonts/Fraunces-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+
+:root {
+  --ink: #0f0f0f;
+  --paper: #fafaf9;
+  --ground-light: #f3f2ef;
+  --ground-night: #0a0d14;
+  --live: #6ae3ff;
+  --c-mail: #1c75bc;
+  --c-sheet: #2ecf9a;
+  --c-chat: #b49ef5;
+  --c-invoice: #fcbb00;
+  --line: 3px;
+  --shadow: 6px 6px 0 var(--ink);
+  --f-body: "Inter", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, monospace;
+  --f-display: "Fraunces", Georgia, serif;
+}
+
+/* ---------- artefacts (the mess) ---------- */
+.art {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px 20px 22px;
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  font: 600 24px/1.2 var(--f-body);
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.art::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: var(--tc); border-right: var(--line) solid var(--ink); }
+.art .ico { width: 44px; height: 44px; margin-left: 14px; flex-shrink: 0; }
+.art .ico svg { width: 100%; height: 100%; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.art .ico svg .fillc { fill: var(--tc); }
+.art small { display: block; font: 500 16px var(--f-mono); color: #0f0f0fbf; margin-top: 4px; }
+.art.sheet { --tc: var(--c-sheet); }
+.art.mail { --tc: var(--c-mail); }
+.art.chat { --tc: var(--c-chat); border-radius: 26px 26px 26px 6px; }
+.art.invoice { --tc: var(--c-invoice); }
+
+/* ---------- units (the scale) ---------- */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 64px;
+  padding: 0 22px;
+  border-top: 2px solid var(--ink);
+  font: 600 22px var(--f-body);
+  color: var(--ink);
+  background: var(--paper);
+  white-space: nowrap;
+}
+.row .meta { font-weight: 400; color: #0f0f0fb3; }
+.row .dot { margin-left: auto; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); background: #d9dbe0; }
+.chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 70px; height: 32px; padding: 0 10px;
+  border: 2px solid var(--ink); border-radius: 999px;
+  font: 500 15px var(--f-mono); letter-spacing: .04em; color: var(--ink);
+  background: var(--tc);
+}
+.chip.sheet { --tc: var(--c-sheet); } .chip.mail { --tc: var(--c-mail); color: var(--paper); }
+.chip.chat { --tc: var(--c-chat); } .chip.invoice { --tc: var(--c-invoice); }
+
+.block {
+  display: flex; align-items: center; gap: 14px;
+  height: 58px; padding: 0 18px;
+  background: var(--paper); border: var(--line) solid var(--ink); border-radius: 12px;
+  box-shadow: 4px 4px 0 var(--ink);
+  font: 600 20px var(--f-body); color: var(--ink); white-space: nowrap;
+}
+.block .dot { margin-left: auto; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--ink); background: var(--c-sheet); }
+
+/* ---------- systems (the one) ---------- */
+.panel {
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px; padding: 0 24px;
+  background: var(--live); border-bottom: var(--line) solid var(--ink);
+  font: 600 26px var(--f-body); color: var(--ink);
+}
+.panel-head .live { display: inline-flex; align-items: center; gap: 8px; font: 500 16px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+.panel-head .live::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
+
+.label {
+  font: 500 22px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink);
+}
+.headline { font: 400 64px/1.05 var(--f-display); font-style: italic; letter-spacing: -.02em; color: var(--ink); }

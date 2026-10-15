@@ -1,0 +1,170 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene\"> is a timeline element that contains nested <div id=\"topbar\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 2,
+    "findings": [
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 3.972,
+        "selector": "#b6",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 585.13,
+          "top": 521.42,
+          "right": 621.72,
+          "bottom": 531.47,
+          "width": 36.59,
+          "height": 10.04
+        },
+        "containerSelector": "#hubCore",
+        "text": "SH-2058",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {
+          "data-hf-id": "hf-qrfu"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 585.13,
+          "y": 521.42,
+          "width": 36.59,
+          "height": 10.04
+        },
+        "firstSeen": 3.972,
+        "lastSeen": 3.972,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.972
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 3.972,
+        "selector": "#b6 > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 556.59,
+          "top": 522.26,
+          "right": 572.66,
+          "bottom": 530.63,
+          "width": 16.07,
+          "height": 8.37
+        },
+        "containerSelector": "#hubCore",
+        "text": "MAIL",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {
+          "data-hf-id": "hf-x5jr"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 556.59,
+          "y": 522.26,
+          "width": 16.07,
+          "height": 8.37
+        },
+        "firstSeen": 3.972,
+        "lastSeen": 3.972,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.972
+        ]
+      }
+    ],
+    "duration": 6.5,
+    "samples": [
+      0.361,
+      1.083,
+      1.806,
+      2.528,
+      3.25,
+      3.972,
+      4.694,
+      5.417,
+      6.139
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 2,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      0.361,
+      1.806,
+      3.25,
+      4.694,
+      6.139
+    ],
+    "checked": 67,
+    "passed": 67
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

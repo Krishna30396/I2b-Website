@@ -448,3 +448,7 @@ h1 em, h2 em { font-style: italic; color: var(--accent); }
 .light-form .intent input:focus-visible + label { outline-color: var(--ink); }
 .foot-addr { margin-top: 10px !important; font-size: 14px; color: #04050899; max-width: 34ch; }
 @media (max-width: 880px) { .foot-close.with-form { grid-template-columns: 1fr; } }
+
+/* What we build: rendered HyperFrames motion cards (1:1, from motion/) */
+.pillar-viz.is-video { height: auto; aspect-ratio: 1 / 1; background: #f3f2ef; border: 1px solid var(--border); cursor: pointer; }
+.pillar-video { display: block; width: 100%; height: 100%; object-fit: cover; }

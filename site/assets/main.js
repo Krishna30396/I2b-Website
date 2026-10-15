@@ -175,6 +175,17 @@
     });
   });
 
+  /* ---------- What we build: play each motion card once in view, hold the end frame ---------- */
+  document.querySelectorAll('.pillar-video').forEach(v => {
+    if (reduce) return; // reduced motion: the poster is the finished end frame; never play
+    v.removeAttribute('poster'); // motion users start from the clean first frame
+    const play = () => { try { v.currentTime = 0; const p = v.play(); if (p) p.catch(() => {}); } catch {} };
+    new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { play(); o.disconnect(); } }), { threshold: 0.5 }).observe(v);
+    const box = v.closest('.pillar-viz');
+    box.addEventListener('mouseenter', () => { if (v.ended) play(); });
+    box.addEventListener('click', () => { if (v.ended || v.paused) play(); });
+  });
+
   /* ---------- careers filter ---------- */
   const filter = document.querySelector('.filter');
   if (filter) {

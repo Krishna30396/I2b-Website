@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1080" />
+    <title>I2B · B2B SaaS · C Grid</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/i2b-objects.css" />
+    <style>
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-600.woff2") format("woff2"); font-weight: 600; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-500.woff2") format("woff2"); font-weight: 500; }
+      @font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1080px; overflow: hidden; background: var(--live); }
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        background-color: var(--live);
+        background-image: radial-gradient(#0f0f0f24 1.6px, transparent 1.6px);
+        background-size: 36px 36px;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      #scene { position: absolute; inset: 0; }
+      .topbar { position: absolute; left: 80px; right: 80px; top: 72px; display: flex; justify-content: space-between; }
+      .sites { position: relative; height: 24px; min-width: 200px; text-align: right; }
+      .sites span { position: absolute; right: 0; top: 0; white-space: nowrap; }
+
+      /* the module (600 x 600), later pulled back to 120 x 120 */
+      #world { position: absolute; left: 240px; top: 200px; width: 600px; height: 600px; z-index: 2; }
+      .module { width: 600px; height: 600px; display: flex; flex-direction: column; }
+      .module .panel-head { background: var(--ink); color: var(--paper); position: relative; }
+      .module .panel-head .live::before { background: var(--c-sheet); }
+      .hswap { position: relative; height: 32px; min-width: 330px; display: block; }
+      .hswap span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+      .tiles { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 18px; padding: 22px; }
+      .tile { position: relative; border: 3px dashed #0f0f0f59; border-radius: 16px; }
+      .fill { position: absolute; inset: -3px; border: 3px solid var(--ink); border-radius: 16px; background: var(--paper); overflow: hidden; display: flex; flex-direction: column; gap: 12px; padding: 30px 20px 18px; }
+      .fill::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 14px; background: var(--tc); border-bottom: 3px solid var(--ink); }
+      .fill .t-head { display: flex; align-items: center; gap: 12px; font: 600 24px var(--f-body); color: var(--ink); }
+      .fill svg { width: 40px; height: 40px; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .fill svg .fillc { fill: var(--tc); }
+      .fill i { display: block; height: 12px; border-radius: 6px; background: #0f0f0f1f; }
+      .fill .st { margin-top: auto; display: flex; align-items: center; gap: 8px; font: 500 15px var(--f-mono); letter-spacing: .06em; color: var(--ink); }
+      .fill .st::before { content: ""; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--ink); background: var(--c-sheet); }
+      .t1 { --tc: var(--c-sheet); } .t2 { --tc: var(--c-mail); } .t3 { --tc: var(--c-chat); } .t4 { --tc: var(--c-invoice); }
+
+      .mini { position: absolute; width: 120px; height: 120px; overflow: hidden; z-index: 1; }
+      .mini .module { transform: scale(0.2); transform-origin: 0 0; }
+
+      .art { z-index: 5; }
+      #a1 { left: 56px; top: 230px; }
+      #a2 { left: 596px; top: 196px; }
+      #a3 { left: 560px; top: 650px; }
+      #a4 { left: 84px; top: 700px; }
+      .headline { position: absolute; left: 80px; right: 80px; top: 904px; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-9ptz" id="root" data-composition-id="b2b-c" data-start="0" data-duration="6.5" data-fps="30" data-width="1080" data-height="1080">
+      <section data-hf-id="hf-0kdj" id="scene" class="clip" data-start="0" data-duration="6.5" data-track-index="0">
+        <div data-hf-id="hf-82kq" class="topbar" id="topbar"><span data-hf-id="hf-oj43" class="label">B2B SaaS</span><span data-hf-id="hf-hmp9" class="label sites"><span data-hf-id="hf-8gry" id="sitesA">I2B</span><span data-hf-id="hf-4exa" id="sitesB">1 site</span></span></div>
+        <div data-hf-id="hf-gs5t" id="grid"></div>
+
+        <div data-hf-id="hf-j427" id="world">
+          <div data-hf-id="hf-h2ig" class="panel module" id="module">
+            <div data-hf-id="hf-95fx" class="panel-head"><span data-hf-id="hf-am2q" class="hswap"><span data-hf-id="hf-o4j9" id="hA">New module</span><span data-hf-id="hf-qezj" id="hB">Shipments · one system</span></span><span data-hf-id="hf-e32x" class="live" id="live">Live</span></div>
+            <div data-hf-id="hf-hovr" class="tiles">
+              <div data-hf-id="hf-awen" class="tile" id="t1"><div data-hf-id="hf-jylg" class="fill t1"><span data-hf-id="hf-0xo2" class="t-head"><svg data-hf-id="hf-b65t" viewBox="0 0 44 44"><rect data-hf-id="hf-wlha" x="5" y="5" width="34" height="34" rx="4" class="fillc"/><path data-hf-id="hf-qq0h" d="M5 16h34M5 27h34M17 5v34"/></svg>Sheets</span><i data-hf-id="hf-seaw" style="width:80%"></i><i data-hf-id="hf-7l8f" style="width:56%"></i><span data-hf-id="hf-f1w2" class="st">Synced</span></div></div>
+              <div data-hf-id="hf-28is" class="tile" id="t2"><div data-hf-id="hf-uu33" class="fill t2"><span data-hf-id="hf-qmme" class="t-head"><svg data-hf-id="hf-57mt" viewBox="0 0 44 44"><rect data-hf-id="hf-1tz0" x="4" y="9" width="36" height="26" rx="4" class="fillc"/><path data-hf-id="hf-m5xv" d="M5 11l17 13 17-13"/></svg>Email</span><i data-hf-id="hf-j5vr" style="width:70%"></i><i data-hf-id="hf-13t0" style="width:84%"></i><span data-hf-id="hf-48cp" class="st">Parsed</span></div></div>
+              <div data-hf-id="hf-306l" class="tile" id="t3"><div data-hf-id="hf-qvz2" class="fill t3"><span data-hf-id="hf-cyec" class="t-head"><svg data-hf-id="hf-6ejw" viewBox="0 0 44 44"><path data-hf-id="hf-p0qk" d="M6 8h32v22H18l-8 7v-7H6z" class="fillc"/></svg>Chat</span><i data-hf-id="hf-amuq" style="width:64%"></i><i data-hf-id="hf-yq0t" style="width:76%"></i><span data-hf-id="hf-2pjy" class="st">Tracked</span></div></div>
+              <div data-hf-id="hf-lrwa" class="tile" id="t4"><div data-hf-id="hf-zjux" class="fill t4"><span data-hf-id="hf-xhoe" class="t-head"><svg data-hf-id="hf-608v" viewBox="0 0 44 44"><path data-hf-id="hf-6mh2" d="M10 4h17l8 8v28H10z" class="fillc"/><path data-hf-id="hf-cqbz" d="M27 4v8h8M16 22h12M16 29h9"/></svg>Invoices</span><i data-hf-id="hf-eklv" style="width:74%"></i><i data-hf-id="hf-f9dh" style="width:50%"></i><span data-hf-id="hf-5pk0" class="st">Matched</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-8eqf" class="art sheet" id="a1" data-layout-allow-overflow="true" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><span data-hf-id="hf-gm9w" class="ico"><svg data-hf-id="hf-775y" viewBox="0 0 44 44"><rect data-hf-id="hf-t4ma" x="5" y="5" width="34" height="34" rx="4" class="fillc"/><path data-hf-id="hf-offp" d="M5 16h34M5 27h34M17 5v34"/></svg></span><span data-hf-id="hf-41eq">Shipments_v7_FINAL.xlsx<small data-hf-id="hf-fmc0">edited 14 times</small></span></div>
+        <div data-hf-id="hf-mn66" class="art mail" id="a2" data-layout-allow-overflow="true" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><span data-hf-id="hf-qj98" class="ico"><svg data-hf-id="hf-6sux" viewBox="0 0 44 44"><rect data-hf-id="hf-8qk4" x="4" y="9" width="36" height="26" rx="4" class="fillc"/><path data-hf-id="hf-1beb" d="M5 11l17 13 17-13"/></svg></span><span data-hf-id="hf-jj84">Re: Re: delay at port<small data-hf-id="hf-3hmn">12 replies</small></span></div>
+        <div data-hf-id="hf-g3po" class="art chat" id="a3" data-layout-allow-overflow="true" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><span data-hf-id="hf-pcc5" class="ico"><svg data-hf-id="hf-7zs0" viewBox="0 0 44 44"><path data-hf-id="hf-431w" d="M6 8h32v22H18l-8 7v-7H6z" class="fillc"/></svg></span><span data-hf-id="hf-8e5e">Driver: stuck at gate 3<small data-hf-id="hf-417f">WhatsApp · 6:42</small></span></div>
+        <div data-hf-id="hf-9lty" class="art invoice" id="a4" data-layout-allow-overflow="true" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><span data-hf-id="hf-pqn6" class="ico"><svg data-hf-id="hf-7lgz" viewBox="0 0 44 44"><path data-hf-id="hf-sdvu" d="M10 4h17l8 8v28H10z" class="fillc"/><path data-hf-id="hf-k5f3" d="M27 4v8h8M16 22h12M16 29h9"/></svg></span><span data-hf-id="hf-e3fe">Invoice_0423.pdf<small data-hf-id="hf-3ks1">unmatched</small></span></div>
+
+        <div data-hf-id="hf-klap" class="headline" id="headline">One system, built to repeat.</div>
+      </section>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const S = document.getElementById("root");
+      const box = el => { const r = el.getBoundingClientRect(), s = S.getBoundingClientRect(); return { cx: r.left - s.left + r.width / 2, cy: r.top - s.top + r.height / 2, h: r.height }; };
+
+      // ---- 24 identical modules around the centre slot (clones of the finished module, ids stripped) ----
+      const grid = document.getElementById("grid"), src = document.getElementById("module"), minis = [];
+      for (let r = 0; r < 5; r++) for (let c = 0; c < 5; c++) {
+        if (r === 2 && c === 2) continue;
+        const m = document.createElement("div");
+        m.className = "mini";
+        m.style.left = (480 + (c - 2) * 144) + "px";
+        m.style.top = (440 + (r - 2) * 144) + "px";
+        const clone = src.cloneNode(true);
+        clone.removeAttribute("id");
+        clone.querySelectorAll("[id]").forEach(n => n.removeAttribute("id"));
+        clone.querySelectorAll(".hswap span:first-child").forEach(n => n.remove());
+        m.appendChild(clone);
+        grid.appendChild(m);
+        minis.push({ m, d: Math.hypot(r - 2, c - 2) });
+      }
+
+      // ---- measure resting layout before any tween ----
+      const arts = ["#a1", "#a2", "#a3", "#a4"].map(q => document.querySelector(q));
+      const tiles = ["#t1", "#t2", "#t3", "#t4"].map(q => document.querySelector(q));
+      const AR = arts.map(box), TR = tiles.map(box);
+
+      tl.set(tiles.map(t => t.querySelector(".fill")), { autoAlpha: 0, immediateRender: true }, 0);
+      tl.set(["#hB", "#live", "#sitesB"], { autoAlpha: 0, immediateRender: true }, 0);
+      tl.set(minis.map(o => o.m), { autoAlpha: 0, immediateRender: true }, 0);
+
+      // ---- MESS: artefacts drop onto the ground and land askew ----
+      tl.fromTo("#topbar", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, ease: "sine.out" }, 0.1);
+      [[-9, "bounce.out", 0.9], [7, "back.out(1.6)", 0.75], [-6, "bounce.out", 0.85], [9, "expo.out", 0.7]].forEach(([r, e, d], i) => {
+        tl.fromTo(arts[i], { y: -1100, rotation: r * 2.5, autoAlpha: 1 }, { y: 0, rotation: r, duration: d, ease: e }, 0.2 + i * 0.14);
+      });
+      tl.fromTo("#world", { autoAlpha: 0, scale: 0.94 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "power2.out" }, 1.2);
+
+      // ---- SNAP: each artefact locks into its tile ----
+      arts.forEach((a, i) => {
+        const t = 1.75 + i * 0.11;
+        tl.to(a, { x: TR[i].cx - AR[i].cx, y: TR[i].cy - AR[i].cy, rotation: 0, scale: 0.72, duration: 0.6, ease: "power3.inOut" }, t);
+        tl.to(a, { autoAlpha: 0, duration: 0.14, ease: "power1.in" }, t + 0.5);
+        tl.fromTo(tiles[i].querySelector(".fill"), { autoAlpha: 0, scale: 0.9 }, { autoAlpha: 1, scale: 1, duration: 0.32, ease: "back.out(1.7)" }, t + 0.46);
+      });
+      tl.to("#hA", { autoAlpha: 0, duration: 0.15 }, 2.6);
+      tl.fromTo("#hB", { autoAlpha: 0, x: -14 }, { autoAlpha: 1, x: 0, duration: 0.35, ease: "expo.out" }, 2.65);
+      tl.fromTo("#live", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25, ease: "sine.out" }, 2.8);
+      tl.to("#sitesA", { autoAlpha: 0, duration: 0.15 }, 2.8);
+      tl.fromTo("#sitesB", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25, ease: "sine.out" }, 2.9);
+
+      // ---- SCALE: pull back — the module is one of many ----
+      tl.to("#world", { scale: 0.2, duration: 1.05, ease: "power3.inOut" }, 3.25);
+      minis.forEach(({ m, d }) => tl.fromTo(m, { autoAlpha: 0, scale: 0.5 }, { autoAlpha: 1, scale: 1, duration: 0.42, ease: "back.out(1.7)" }, 3.75 + d * 0.11));
+      const n = { v: 1 };
+      tl.to(n, { v: 25, duration: 1.0, ease: "power1.out", onUpdate: () => { const v = Math.round(n.v); document.getElementById("sitesB").textContent = v + (v === 1 ? " site" : " sites"); } }, 3.8);
+
+      // ---- HOLD ----
+      tl.fromTo("#headline", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: "expo.out" }, 5.05);
+
+      window.__timelines["b2b-c"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

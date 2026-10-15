@@ -1,0 +1,404 @@
+{
+  "version": 1,
+  "historyId": "ffd9e119-5039-4991-a076-f6ef6314af6f",
+  "currentRevision": "da3cd672-712c-4a97-bc7c-752e7f4bcdc8",
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\1d\\1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5"
+    },
+    "CLAUDE.md": {
+      "hash": "1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\1d\\1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5"
+    },
+    "assets/fonts/Fraunces-400i.woff2": {
+      "hash": "f51349995e760cbc3e3d22fe85f7f04dcf2384ab09944535dddd700ace0e16ad",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\f5\\f51349995e760cbc3e3d22fe85f7f04dcf2384ab09944535dddd700ace0e16ad"
+    },
+    "assets/fonts/Inter-400.woff2": {
+      "hash": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\31\\3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    "assets/fonts/Inter-600.woff2": {
+      "hash": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\31\\3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    "assets/fonts/JetBrainsMono-500.woff2": {
+      "hash": "cb182feeed4d798ff6961d3c79f7026279448fca0676438aaecb21f3fc39553a",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\cb\\cb182feeed4d798ff6961d3c79f7026279448fca0676438aaecb21f3fc39553a"
+    },
+    "assets/i2b-objects.css": {
+      "hash": "2819f05769342dc50c1138192423b2bd0d6e4fc91785bfadcba280adc6d415ec",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\28\\2819f05769342dc50c1138192423b2bd0d6e4fc91785bfadcba280adc6d415ec"
+    },
+    "hyperframes.json": {
+      "hash": "e5da816b77f863aa4798d974bc68d65805329ca4d39ebcf353967c5b47e677a6",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\e5\\e5da816b77f863aa4798d974bc68d65805329ca4d39ebcf353967c5b47e677a6"
+    },
+    "index.html": {
+      "hash": "9d41a846ea8a3c27bbcbc8deabb895de6d5a3a18df4fa86095a27b8d2648a023",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\9d\\9d41a846ea8a3c27bbcbc8deabb895de6d5a3a18df4fa86095a27b8d2648a023"
+    },
+    "meta.json": {
+      "hash": "7a7f5f64ab577fbc5e9fe287070493cb9f468ab3f897db899a3f47234268dea4",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\7a\\7a7f5f64ab577fbc5e9fe287070493cb9f468ab3f897db899a3f47234268dea4"
+    },
+    "package.json": {
+      "hash": "bcb3050bda4ace749c68d7352ba7c65f754d975f2b2e8f3f39292d1f5cc2e43e",
+      "content": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\bc\\bcb3050bda4ace749c68d7352ba7c65f754d975f2b2e8f3f39292d1f5cc2e43e"
+    }
+  },
+  "revisions": {
+    "a9be0f00-71de-45f5-acf7-1c70aa01c48d": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792049343985,
+      "endedAt": 1792049343998,
+      "files": {
+        "assets/i2b-objects.css": {
+          "before": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\d1\\d16f09db781ba9c9752f213d11a6d969a8b5c4b171611ca046ff812b3f743526",
+          "after": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\28\\2819f05769342dc50c1138192423b2bd0d6e4fc91785bfadcba280adc6d415ec"
+        },
+        "index.html": {
+          "before": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\55\\5521f5dcb77990dda460468fba7d3f0363eb1e5fd70d63a4f8725ba26182d87a",
+          "after": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\54\\542e8b99a6998c8b66f3533dd98777c1a26ceefbb3be47a46875e822d2ef0860"
+        }
+      }
+    },
+    "ee441afa-3557-415c-9fa2-fbeff4459f6c": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792049409585,
+      "endedAt": 1792049409590,
+      "files": {
+        "index.html": {
+          "before": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\54\\542e8b99a6998c8b66f3533dd98777c1a26ceefbb3be47a46875e822d2ef0860",
+          "after": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\6d\\6dfd65d255c15bbdda855ca0703d4d732cbfb564606626bba281a93ded11a9d2"
+        }
+      }
+    },
+    "da3cd672-712c-4a97-bc7c-752e7f4bcdc8": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792049891669,
+      "endedAt": 1792049893670,
+      "files": {
+        "index.html": {
+          "before": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\6d\\6dfd65d255c15bbdda855ca0703d4d732cbfb564606626bba281a93ded11a9d2",
+          "after": "C:\\Users\\Srikrishna\\.cache\\hyperframes\\history\\ffd9e119-5039-4991-a076-f6ef6314af6f\\blobs\\9d\\9d41a846ea8a3c27bbcbc8deabb895de6d5a3a18df4fa86095a27b8d2648a023"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "da3cd672-712c-4a97-bc7c-752e7f4bcdc8",
+      "id": "00d38f2e-cba3-4307-a157-60cdbb2a92d5"
+    },
+    "revisions": {
+      "a9be0f00-71de-45f5-acf7-1c70aa01c48d": [
+        {
+          "id": "771d923c-4479-4fa9-b23f-00d86c87e81f",
+          "scope": "project",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792049350695,
+          "contentHash": "76fa43f31d219dd03e5781fb835db99a92e776aba84d2a7c693fd50325e4a556",
+          "revision": "a9be0f00-71de-45f5-acf7-1c70aa01c48d",
+          "inputFingerprint": "866dd67c3adf4a042f5bae7d301ca053bfa57b58f67afcea15e8ed855e329e6b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "27dfe976-c709-4345-8a50-4209ae76a26e"
+        }
+      ],
+      "da3cd672-712c-4a97-bc7c-752e7f4bcdc8": [
+        {
+          "id": "00d38f2e-cba3-4307-a157-60cdbb2a92d5",
+          "scope": "project",
+          "report": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\checks\\00d38f2e-cba3-4307-a157-60cdbb2a92d5.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792049903070,
+          "contentHash": "74880b527aa12a03d9b1e03b9bd71401bafcdd017be361b3904e52bf24ec2747",
+          "revision": "da3cd672-712c-4a97-bc7c-752e7f4bcdc8",
+          "inputFingerprint": "4057ecc4cd1655d720674d0bb4b210f3258d3d2ff6a28780776185c46d039829",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "id": "a526aff3-03db-4cf2-94fe-67d0ebf59be8",
+        "scope": "project",
+        "report": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\checks\\a526aff3-03db-4cf2-94fe-67d0ebf59be8.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 3000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1792049165787,
+        "contentHash": "f80c98c9631a41e0074bc450b59fd4a315e0f267b45803760599871307b53274",
+        "revision": null,
+        "inputFingerprint": "30d891d132662f1bc5fa363588005959754618e328e3f9e6c1f067e014504148",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": {
+      "revision": "da3cd672-712c-4a97-bc7c-752e7f4bcdc8",
+      "id": "06dfd1ec-4b84-4fe8-b9b8-adfe8439709b-2"
+    },
+    "revisions": {
+      "da3cd672-712c-4a97-bc7c-752e7f4bcdc8": [
+        {
+          "scope": "full",
+          "id": "06dfd1ec-4b84-4fe8-b9b8-adfe8439709b-0",
+          "image": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\snapshots\\682d9171-bb80-40b4-b48b-4535ab9ec924\\frame-00-at-1.2s.png",
+          "time": 1.2,
+          "metadata": {
+            "width": 1080,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792049910080,
+          "contentHash": "eab26d0f000eb0205ca0071c498946644b3eb57d77c74eaee6bff72de65a9472",
+          "revision": "da3cd672-712c-4a97-bc7c-752e7f4bcdc8",
+          "inputFingerprint": "4057ecc4cd1655d720674d0bb4b210f3258d3d2ff6a28780776185c46d039829",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "06dfd1ec-4b84-4fe8-b9b8-adfe8439709b-1",
+          "image": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\snapshots\\682d9171-bb80-40b4-b48b-4535ab9ec924\\frame-01-at-2.6s.png",
+          "time": 2.6,
+          "metadata": {
+            "width": 1080,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792049910081,
+          "contentHash": "afce8372a26b44fbb9d85bc3a673459c5a2941ca69beb836a7dd7dfc3bfda9d2",
+          "revision": "da3cd672-712c-4a97-bc7c-752e7f4bcdc8",
+          "inputFingerprint": "4057ecc4cd1655d720674d0bb4b210f3258d3d2ff6a28780776185c46d039829",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "06dfd1ec-4b84-4fe8-b9b8-adfe8439709b-2",
+          "image": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\snapshots\\682d9171-bb80-40b4-b48b-4535ab9ec924\\frame-02-at-6.3s.png",
+          "time": 6.3,
+          "metadata": {
+            "width": 1080,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792049910081,
+          "contentHash": "edde0366122eeec62e54930ab801676994ad6a6f0769fdba28ca6f2b12366b8f",
+          "revision": "da3cd672-712c-4a97-bc7c-752e7f4bcdc8",
+          "inputFingerprint": "4057ecc4cd1655d720674d0bb4b210f3258d3d2ff6a28780776185c46d039829",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "scope": "full",
+        "id": "cab1a072-54c5-4851-bb2d-602cd7e38473-0",
+        "image": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\snapshots\\f4a7f477-063c-4a5d-af22-637db39caa08\\frame-00-at-0.15s.png",
+        "time": 0.15,
+        "metadata": {
+          "width": 1080,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792049171894,
+        "contentHash": "7612905e0bc752c260c468a69c73fad66293272838d243bb277f016a62319e8e",
+        "revision": null,
+        "inputFingerprint": "30d891d132662f1bc5fa363588005959754618e328e3f9e6c1f067e014504148",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "cab1a072-54c5-4851-bb2d-602cd7e38473-1",
+        "image": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\snapshots\\f4a7f477-063c-4a5d-af22-637db39caa08\\frame-01-at-1.2s.png",
+        "time": 1.2,
+        "metadata": {
+          "width": 1080,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792049171894,
+        "contentHash": "bc68592a922b0401e53b1a37a241ea1e7fe0a7f2797ed0bc2325358490536793",
+        "revision": null,
+        "inputFingerprint": "30d891d132662f1bc5fa363588005959754618e328e3f9e6c1f067e014504148",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "cab1a072-54c5-4851-bb2d-602cd7e38473-2",
+        "image": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\snapshots\\f4a7f477-063c-4a5d-af22-637db39caa08\\frame-02-at-1.9s.png",
+        "time": 1.9,
+        "metadata": {
+          "width": 1080,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792049171894,
+        "contentHash": "7f5a2f7d302b4fec1d2ff826a007573a852a18aca9c38ff355adc829dfdc3420",
+        "revision": null,
+        "inputFingerprint": "30d891d132662f1bc5fa363588005959754618e328e3f9e6c1f067e014504148",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "cab1a072-54c5-4851-bb2d-602cd7e38473-3",
+        "image": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\snapshots\\f4a7f477-063c-4a5d-af22-637db39caa08\\frame-03-at-2.6s.png",
+        "time": 2.6,
+        "metadata": {
+          "width": 1080,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792049171895,
+        "contentHash": "b746acb6f91fceedb496398306153d012f02d7aa89f42fad00e09983397d6e76",
+        "revision": null,
+        "inputFingerprint": "30d891d132662f1bc5fa363588005959754618e328e3f9e6c1f067e014504148",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "cab1a072-54c5-4851-bb2d-602cd7e38473-4",
+        "image": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\snapshots\\f4a7f477-063c-4a5d-af22-637db39caa08\\frame-04-at-4s.png",
+        "time": 4,
+        "metadata": {
+          "width": 1080,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792049171895,
+        "contentHash": "ad42d2d4f9630fd08e96fa264d4054216baaaa9a1fd4c631bafa0ab5d6b6501b",
+        "revision": null,
+        "inputFingerprint": "30d891d132662f1bc5fa363588005959754618e328e3f9e6c1f067e014504148",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "cab1a072-54c5-4851-bb2d-602cd7e38473-5",
+        "image": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\.hyperframes\\artifacts\\snapshots\\f4a7f477-063c-4a5d-af22-637db39caa08\\frame-05-at-6.3s.png",
+        "time": 6.3,
+        "metadata": {
+          "width": 1080,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792049171895,
+        "contentHash": "6c8b991d7c5592600b12ef9d80358e12cf5f3031063063a2b6c20ae25a63856c",
+        "revision": null,
+        "inputFingerprint": "30d891d132662f1bc5fa363588005959754618e328e3f9e6c1f067e014504148",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "renders": {
+    "latest": {
+      "id": "27dfe976-c709-4345-8a50-4209ae76a26e",
+      "completedAt": 1792059427340,
+      "output": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-b-pipeline\\renders\\video.mp4",
+      "status": "completed",
+      "revision": "da3cd672-712c-4a97-bc7c-752e7f4bcdc8"
+    },
+    "retainedRevisions": [
+      "da3cd672-712c-4a97-bc7c-752e7f4bcdc8"
+    ]
+  },
+  "pendingArtifactCleanup": []
+}

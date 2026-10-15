@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script data-hf-gsap-fallback>
+(function(){
+  var cdnBase="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/";
+  var loaded={};
+  function loadFallback(file){
+    if(loaded[file])return loaded[file];
+    return loaded[file]=new Promise(function(ok,fail){
+      var s=document.createElement("script");
+      s.src=cdnBase+file;s.hfGsapFallback=true;s.onload=ok;s.onerror=fail;
+      document.head.appendChild(s);
+    });
+  }
+  document.addEventListener("error",function(e){
+    var t=e.target;
+    if(!t||t.tagName!=="SCRIPT"||!t.src||t.hfGsapFallback)return;
+    var m=t.src.match(/gsap[^/]*\/dist\/(.+\.js)/);
+    if(m)loadFallback(m[1]).catch(function(){
+      reportError(new Error("GSAP could not load from "+t.src+" or "+cdnBase+m[1]+", so this preview's animations will not play."));
+    });
+  },true);
+})();
+</script>
+<meta name="hyperframes-studio-preview"><script>(function(){var seen=window.__hfPreviewErrors=[];
+addEventListener("error",function(e){seen.push(e.message||String(e))});})();</script>
+<base href="/api/projects/incubation-pipeline/preview/"><style data-hyperframes-text-rendering="true">html,body,*{text-rendering:geometricPrecision}</style><script data-hf-after-fonts-fallback="">document.addEventListener("DOMContentLoaded", function () {
+  if (window.__hfAfterFontsClaimed) return;
+  var T = "text/hf-after-fonts";
+  var all = [].slice.call(document.querySelectorAll('script[type="text/hf-after-fonts"], script[type="text/hf-after-fonts+module"]'));
+  if (!all.length) return;
+  console.warn("[hyperframes] the runtime has no web-font gate; composition scripts run without waiting for fonts");
+  var late = function (el) { return el.type !== T || el.matches('[defer][src], [defer][data-hf-inlined-src]'); };
+  var queue = all.filter(function (el) { return !late(el); }).concat(all.filter(late));
+  (function next() {
+    var el = queue.shift();
+    if (!el) return;
+    var s = document.createElement("script");
+    for (var i = 0; i < el.attributes.length; i++) s.setAttribute(el.attributes[i].name, el.attributes[i].value);
+    if (el.type === T) s.removeAttribute("type"); else s.type = "module";
+    s.async = el.hasAttribute("async");
+    s.text = el.text;
+    var waits = s.type !== "module" && s.hasAttribute("src") && !s.async && !s.noModule;
+    if (waits) { s.addEventListener("load", next); s.addEventListener("error", next); }
+    el.replaceWith(s);
+    if (!waits) next();
+  })();
+});
+//# sourceURL=hyperframes://after-fonts-fallback</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, height=1080">
+    <title>I2B · Incubation & investment · Blueprint</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>/* I2B Object System — shared object library (see ../DESIGN-SYSTEM.md).
+   Synced into each project as assets/i2b-objects.css by system/sync.mjs. */
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-600.woff2") format("woff2"); font-weight: 600; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-500.woff2") format("woff2"); font-weight: 500; }
+@font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+
+:root {
+  --ink: #0f0f0f;
+  --paper: #fafaf9;
+  --ground-light: #f3f2ef;
+  --ground-night: #0a0d14;
+  --live: #6ae3ff;
+  --c-mail: #1c75bc;
+  --c-sheet: #2ecf9a;
+  --c-chat: #b49ef5;
+  --c-invoice: #fcbb00;
+  --line: 3px;
+  --shadow: 6px 6px 0 var(--ink);
+  --f-body: "Inter", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, monospace;
+  --f-display: "Fraunces", Georgia, serif;
+}
+
+/* ---------- artefacts (the mess) ---------- */
+.art {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px 20px 22px;
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  font: 600 24px/1.2 var(--f-body);
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.art::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: var(--tc); border-right: var(--line) solid var(--ink); }
+.art .ico { width: 44px; height: 44px; margin-left: 14px; flex-shrink: 0; }
+.art .ico svg { width: 100%; height: 100%; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.art .ico svg .fillc { fill: var(--tc); }
+.art small { display: block; font: 500 16px var(--f-mono); color: #0f0f0fbf; margin-top: 4px; }
+.art.sheet { --tc: var(--c-sheet); }
+.art.mail { --tc: var(--c-mail); }
+.art.chat { --tc: var(--c-chat); border-radius: 26px 26px 26px 6px; }
+.art.invoice { --tc: var(--c-invoice); }
+
+/* ---------- units (the scale) ---------- */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 64px;
+  padding: 0 22px;
+  border-top: 2px solid var(--ink);
+  font: 600 22px var(--f-body);
+  color: var(--ink);
+  background: var(--paper);
+  white-space: nowrap;
+}
+.row .meta { font-weight: 400; color: #0f0f0fb3; }
+.row .dot { margin-left: auto; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); background: #d9dbe0; }
+.chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 70px; height: 32px; padding: 0 10px;
+  border: 2px solid var(--ink); border-radius: 999px;
+  font: 500 15px var(--f-mono); letter-spacing: .04em; color: var(--ink);
+  background: var(--tc);
+}
+.chip.sheet { --tc: var(--c-sheet); } .chip.mail { --tc: var(--c-mail); color: var(--paper); }
+.chip.chat { --tc: var(--c-chat); } .chip.invoice { --tc: var(--c-invoice); }
+
+.block {
+  display: flex; align-items: center; gap: 14px;
+  height: 58px; padding: 0 18px;
+  background: var(--paper); border: var(--line) solid var(--ink); border-radius: 12px;
+  box-shadow: 4px 4px 0 var(--ink);
+  font: 600 20px var(--f-body); color: var(--ink); white-space: nowrap;
+}
+.block .dot { margin-left: auto; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--ink); background: var(--c-sheet); }
+
+/* ---------- systems (the one) ---------- */
+.panel {
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px; padding: 0 24px;
+  background: var(--live); border-bottom: var(--line) solid var(--ink);
+  font: 600 26px var(--f-body); color: var(--ink);
+}
+.panel-head .live { display: inline-flex; align-items: center; gap: 8px; font: 500 16px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+.panel-head .live::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
+
+.label {
+  font: 500 22px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink);
+}
+.headline { font: 400 64px/1.05 var(--f-display); font-style: italic; letter-spacing: -.02em; color: var(--ink); }
+
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-600.woff2") format("woff2"); font-weight: 600; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-500.woff2") format("woff2"); font-weight: 500; }
+      @font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1080px; overflow: hidden; background: var(--ground-light); }
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        background-color: var(--ground-light);
+        background-image: radial-gradient(#0f0f0f1f 1.6px, transparent 1.6px);
+        background-size: 36px 36px;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      #scene { position: absolute; inset: 0; }
+      .topbar { position: absolute; left: 80px; right: 80px; top: 72px; display: flex; justify-content: space-between; }
+
+      /* ---- the container: a blueprint sheet (paper + faint structure-blue grid) ---- */
+      .sheet-paper {
+        position: absolute; left: 110px; top: 140px; width: 860px; height: 720px;
+        background-color: var(--paper);
+        background-image:
+          linear-gradient(#1c75bc33 1.5px, transparent 1.5px), linear-gradient(90deg, #1c75bc33 1.5px, transparent 1.5px),
+          linear-gradient(#1c75bc17 1px, transparent 1px), linear-gradient(90deg, #1c75bc17 1px, transparent 1px);
+        background-size: 150px 150px, 150px 150px, 30px 30px, 30px 30px;
+        background-position: -1px -1px;
+        border: var(--line) solid var(--ink); border-radius: 18px; box-shadow: 8px 8px 0 var(--ink);
+      }
+      .frame { position: absolute; inset: 12px; border: 2px solid #1c75bc59; border-radius: 10px; }
+      .sheet-tag { position: absolute; left: 30px; top: 28px; font: 500 18px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: #13578c; }
+      .titleblock {
+        position: absolute; left: 590px; top: 24px; width: 246px;
+        background: var(--paper); border: 2px solid var(--ink); border-radius: 10px; overflow: hidden;
+      }
+      .titleblock div { padding: 8px 12px; }
+      .titleblock div + div { border-top: 2px solid var(--ink); }
+      .tb-k { font: 500 18px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: #3d3d3d; }
+      .tb-v { font: 600 26px var(--f-body); color: var(--ink); }
+      .tb-team { font: 500 18px var(--f-mono); color: var(--ink); background: var(--live); }
+
+      /* ---- cue: dashed building outline + slot labels ---- */
+      #outline { position: absolute; left: 0; top: 0; width: 860px; height: 720px; }
+      #outline .dash { fill: none; stroke: #1c75bc; stroke-width: 3; stroke-dasharray: 12 9; stroke-linejoin: round; }
+      #outline .mk { fill: none; stroke: #fff; stroke-width: 12; }
+      .slot { position: absolute; font: 500 18px var(--f-mono); letter-spacing: .08em; color: #13578c; text-align: center; }
+
+      /* ---- support blocks: solid colour by role, ink outline, hard shadow ---- */
+      .blk {
+        position: absolute; display: flex; align-items: center; gap: 12px; padding: 0 22px;
+        border: var(--line) solid var(--ink); border-radius: 10px; box-shadow: 6px 6px 0 var(--ink);
+        font: 600 24px var(--f-body); color: var(--ink); white-space: nowrap;
+      }
+      .blk small { font: 500 18px var(--f-mono); color: #0f0f0fcc; }
+      .blk svg { width: 34px; height: 34px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+      #capital { left: 160px; top: 532px; width: 420px; height: 52px; background: var(--c-invoice); }
+      #product { left: 180px; top: 422px; width: 380px; height: 110px; background: var(--c-chat); align-items: flex-start; padding-top: 16px; }
+      #eng { left: 180px; top: 346px; width: 380px; height: 76px; background: var(--c-mail); color: var(--paper); }
+      #eng small { color: var(--paper); margin-left: auto; }
+      .lvl { left: 180px; width: 380px; height: 64px; background: var(--paper); }
+      .lvl small { color: #3d3d3d; }
+      .lvl .wins { margin-left: auto; display: flex; gap: 12px; }
+      .lvl .wins i { display: block; width: 30px; height: 26px; border: 2px solid var(--ink); border-radius: 4px; background: #d9dbe0; }
+      #lv2 { top: 282px; }
+      #lv3 { top: 218px; }
+      #roof { position: absolute; left: 170px; top: 128px; width: 400px; height: 90px; }
+      #roof svg.shape { position: absolute; left: 0; top: 0; width: 406px; height: 96px; overflow: visible; }
+      .roof-label { position: absolute; left: 0; right: 0; top: 34px; display: flex; justify-content: center; align-items: center; gap: 10px; font: 600 24px var(--f-body); color: var(--ink); }
+      .roof-label svg { width: 30px; height: 30px; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      #flag { position: absolute; left: 192px; top: -74px; width: 160px; height: 74px; }
+      #flag .pole { position: absolute; left: 0; top: 0; width: 4px; height: 74px; background: var(--ink); border-radius: 2px; }
+      #flag .cloth {
+        position: absolute; left: 4px; top: 2px; height: 40px; padding: 0 14px; display: flex; align-items: center;
+        background: var(--live); border: var(--line) solid var(--ink); border-radius: 0 8px 8px 0; box-shadow: 4px 4px 0 var(--ink);
+        font: 600 20px var(--f-body); color: var(--ink); white-space: nowrap;
+      }
+
+      /* ---- the idea: a sticky note ---- */
+      #note {
+        position: absolute; left: 282px; top: 406px; width: 176px; height: 128px; padding: 22px 18px 0;
+        background: #fff7c2; border: var(--line) solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink);
+        display: flex; flex-direction: column; gap: 12px; z-index: 5;
+      }
+      #note b { font: 600 30px/1.1 var(--f-body); color: var(--ink); white-space: nowrap; }
+      #note i { display: block; height: 3px; border-radius: 2px; background: #0f0f0f59; }
+      #note i + i { width: 64%; }
+      #pin { position: absolute; left: 76px; top: -11px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); border: 3px solid var(--paper); }
+
+      /* ---- proof: milestone ruler ---- */
+      #rulerLine { position: absolute; left: 40px; top: 638px; width: 780px; height: 4px; background: var(--ink); border-radius: 2px; }
+      .tick { position: absolute; top: 630px; width: 20px; height: 20px; margin-left: -10px; border-radius: 50%; border: 3px solid var(--ink); background: var(--paper); }
+      .mlabel { position: absolute; top: 660px; width: 180px; margin-left: -90px; text-align: center; font: 600 20px var(--f-body); color: #5c5c5c; white-space: nowrap; }
+      #marker { position: absolute; top: 626px; width: 28px; height: 28px; margin-left: -14px; border-radius: 50%; background: var(--live); border: var(--line) solid var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+
+      .headline { position: absolute; left: 80px; top: 896px; font-size: 56px; }</style>
+    
+  
+<script data-hyperframes-preview-runtime="1" src="/api/runtime.js"></script>
+<meta name="hyperframes-project-signature" content="6186a365a86f7cb72ec2d27f">
+</head>
+  <body>
+    <div data-hf-id="hf-vowu" id="root" data-composition-id="incubation-b" data-start="0" data-duration="6.5" data-fps="30" data-width="1080" data-height="1080">
+      <section data-hf-id="hf-0kdj" id="scene" class="clip" data-start="0" data-duration="6.5" data-track-index="0">
+        <div data-hf-id="hf-82kq" class="topbar" id="topbar"><span data-hf-id="hf-mvyc" class="label">Incubation &amp; investment</span><span data-hf-id="hf-hfqg" class="label">I2B</span></div>
+
+        <div data-hf-id="hf-zyr0" class="sheet-paper" id="sheet" data-layout-allow-overflow="true">
+          <div data-hf-id="hf-d9wv" class="frame"></div>
+          <div data-hf-id="hf-sh1u" class="sheet-tag">Build plan · sheet 01</div>
+          <div data-hf-id="hf-oup2" class="titleblock" id="titleblock">
+            <div data-hf-id="hf-yeow"><span data-hf-id="hf-x9is" class="tb-k">Project</span></div>
+            <div data-hf-id="hf-y7yw"><span data-hf-id="hf-fm1y" class="tb-v">Your company</span></div>
+            <div data-hf-id="hf-cw92" class="tb-team" id="team">Team on day one · 4</div>
+          </div>
+
+          <!-- cue: dashed outline of the building, drawn on through masks -->
+          <svg data-hf-id="hf-lzn3" id="outline" viewBox="0 0 860 720" aria-hidden="true" data-layout-allow-overlap="true" data-layout-allow-occlusion="true">
+            <defs data-hf-id="hf-mh0t">
+              <mask data-hf-id="hf-8wj2" id="m1" maskUnits="userSpaceOnUse" x="0" y="0" width="860" height="720"><path data-hf-id="hf-ol28" class="mk" id="k1" d="M160 532 H580 V584 H160 Z" /></mask>
+              <mask data-hf-id="hf-emk7" id="m2" maskUnits="userSpaceOnUse" x="0" y="0" width="860" height="720"><path data-hf-id="hf-rmnz" class="mk" id="k2" d="M180 532 V422 H560 V532" /></mask>
+              <mask data-hf-id="hf-mzfk" id="m3" maskUnits="userSpaceOnUse" x="0" y="0" width="860" height="720"><path data-hf-id="hf-qqqz" class="mk" id="k3" d="M180 422 V346 H560 V422" /></mask>
+              <mask data-hf-id="hf-1yz5" id="m4" maskUnits="userSpaceOnUse" x="0" y="0" width="860" height="720"><path data-hf-id="hf-21py" class="mk" id="k4" d="M170 346 L250 256 H490 L570 346" /></mask>
+            </defs>
+            <path data-hf-svg-reference-aliases="[{&quot;name&quot;:&quot;mask&quot;,&quot;localName&quot;:&quot;mask&quot;,&quot;namespaceURI&quot;:null,&quot;before&quot;:&quot;url(#m1)&quot;,&quot;after&quot;:&quot;url(#m1)&quot;}]" data-hf-id="hf-18hm" class="dash" mask="url(#m1)" d="M160 532 H580 V584 H160 Z" />
+            <path data-hf-svg-reference-aliases="[{&quot;name&quot;:&quot;mask&quot;,&quot;localName&quot;:&quot;mask&quot;,&quot;namespaceURI&quot;:null,&quot;before&quot;:&quot;url(#m2)&quot;,&quot;after&quot;:&quot;url(#m2)&quot;}]" data-hf-id="hf-vz9f" class="dash" mask="url(#m2)" d="M180 532 V422 H560 V532" />
+            <path data-hf-svg-reference-aliases="[{&quot;name&quot;:&quot;mask&quot;,&quot;localName&quot;:&quot;mask&quot;,&quot;namespaceURI&quot;:null,&quot;before&quot;:&quot;url(#m3)&quot;,&quot;after&quot;:&quot;url(#m3)&quot;}]" data-hf-id="hf-g0bd" class="dash" mask="url(#m3)" d="M180 422 V346 H560 V422" />
+            <path data-hf-svg-reference-aliases="[{&quot;name&quot;:&quot;mask&quot;,&quot;localName&quot;:&quot;mask&quot;,&quot;namespaceURI&quot;:null,&quot;before&quot;:&quot;url(#m4)&quot;,&quot;after&quot;:&quot;url(#m4)&quot;}]" data-hf-id="hf-w1r6" class="dash" mask="url(#m4)" d="M170 346 L250 256 H490 L570 346" />
+          </svg>
+          <div data-hf-id="hf-5ztc" class="slot" id="s1" style="left:160px; top:546px; width:420px;" data-layout-allow-occlusion="true">foundation</div>
+          <div data-hf-id="hf-so07" class="slot" id="s2" style="left:196px; top:440px; width:90px; text-align:left;" data-layout-allow-occlusion="true">walls</div>
+          <div data-hf-id="hf-bx02" class="slot" id="s3" style="left:180px; top:372px; width:380px;" data-layout-allow-occlusion="true">floors</div>
+          <div data-hf-id="hf-luq0" class="slot" id="s4" style="left:250px; top:300px; width:240px;" data-layout-allow-occlusion="true">roof</div>
+
+          <!-- support blocks -->
+          <div data-hf-id="hf-10pw" class="blk lvl" id="lv3" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><small data-hf-id="hf-nkmf">Level 3</small><span data-hf-id="hf-cu7w" class="wins"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><i data-hf-id="hf-ylp6"></i></span></div>
+          <div data-hf-id="hf-3zzh" class="blk lvl" id="lv2" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><small data-hf-id="hf-nyxg">Level 2</small><span data-hf-id="hf-nd6c" class="wins"><i data-hf-id="hf-0l8b"></i><i data-hf-id="hf-0zjc"></i><i data-hf-id="hf-zsm9"></i><i data-hf-id="hf-06xa"></i></span></div>
+          <div data-hf-id="hf-9u4d" class="blk" id="capital" data-layout-allow-overlap="true" data-layout-allow-occlusion="true">
+            <svg data-hf-id="hf-054f" viewBox="0 0 34 34"><circle data-hf-id="hf-3zwi" cx="17" cy="17" r="13" /><path data-hf-id="hf-5f2j" d="M21 11h-5.5a3 3 0 0 0 0 6h3a3 3 0 0 1 0 6H13" /></svg>Capital<small data-hf-id="hf-8kth">pre-seed</small></div>
+          <div data-hf-id="hf-8gzb" class="blk" id="product" data-layout-allow-overlap="true" data-layout-allow-occlusion="true">Product &amp; design</div>
+          <div data-hf-id="hf-huye" class="blk" id="eng" data-layout-allow-overlap="true" data-layout-allow-occlusion="true">
+            <svg data-hf-id="hf-oqhb" viewBox="0 0 34 34"><path data-hf-id="hf-vtua" d="M11 10l-7 7 7 7M23 10l7 7-7 7M19 7l-4 20" /></svg>Engineering<small data-hf-id="hf-axqy">AI · cloud</small></div>
+          <div data-hf-id="hf-lwsm" id="roof" data-layout-allow-overlap="true" data-layout-allow-occlusion="true" data-layout-allow-overflow="true">
+            <svg data-hf-id="hf-kh3r" class="shape" viewBox="0 0 406 96" aria-hidden="true">
+              <polygon data-hf-id="hf-l3se" points="6,96 406,96 326,6 86,6" fill="#0f0f0f" />
+              <polygon data-hf-id="hf-cchj" points="1.5,90 398.5,90 319,1.5 81,1.5" fill="#2ecf9a" stroke="#0f0f0f" stroke-width="3" stroke-linejoin="round" />
+            </svg>
+            <div data-hf-id="hf-2tlv" class="roof-label"><svg data-hf-id="hf-u3w7" viewBox="0 0 30 30"><path data-hf-id="hf-hnec" d="M15 3l10 4v7c0 7-5 11-10 13C10 25 5 21 5 14V7z" /><path data-hf-id="hf-lnt8" d="M10 15l4 4 6-7" /></svg>Governance</div>
+            <div data-hf-id="hf-v7b7" id="flag"><span data-hf-id="hf-5qgb" class="pole"></span><span data-hf-id="hf-yfmy" class="cloth">Company</span></div>
+          </div>
+
+          <!-- the idea -->
+          <div data-hf-id="hf-l77b" id="note" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><span data-hf-id="hf-vwaz" id="pin"></span><b data-hf-id="hf-6z7t">Your idea</b><i data-hf-id="hf-26gf"></i><i data-hf-id="hf-2krg"></i></div>
+
+          <!-- proof: milestone ruler -->
+          <div data-hf-id="hf-8z3d" id="rulerLine"></div>
+          <span data-hf-id="hf-81f1" class="tick" style="left:80px"></span><span data-hf-id="hf-f38s" class="tick" style="left:245px"></span><span data-hf-id="hf-rrog" class="tick" style="left:410px"></span><span data-hf-id="hf-eka5" class="tick" style="left:590px"></span><span data-hf-id="hf-6d6l" class="tick" style="left:770px"></span>
+          <span data-hf-id="hf-353k" class="mlabel" style="left:80px">Idea</span><span data-hf-id="hf-5niw" class="mlabel" style="left:245px">Prototype</span><span data-hf-id="hf-nrlb" class="mlabel" style="left:410px">v1</span><span data-hf-id="hf-lifu" class="mlabel" style="left:590px">First customers</span><span data-hf-id="hf-lpnm" class="mlabel" style="left:770px">Next round</span>
+          <span data-hf-id="hf-miud" id="marker" style="left:80px" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"></span>
+        </div>
+
+        <div data-hf-id="hf-8pwt" class="headline" id="headline">Your idea, with a team behind it.</div>
+      </section>
+    </div>
+
+    
+  <script type="text/hf-after-fonts">const tl = gsap.timeline({ paused: true, defaults: { immediateRender: false } });
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+const masks = ["#k1", "#k2", "#k3", "#k4"].map($);
+const lens = masks.map((p) => p.getTotalLength());
+const slots = ["#s1", "#s2", "#s3", "#s4"].map($);
+const ticks = $$(".tick"), mlabels = $$(".mlabel");
+const ROOF_DROP = 128;
+tl.set(masks, { strokeDasharray: (i) => lens[i], strokeDashoffset: (i) => lens[i], immediateRender: true }, 0);
+tl.set(["#topbar", "#sheet", ...slots, "#lv2", "#lv3", "#capital", "#product", "#eng", "#roof", "#flag", "#team", "#rulerLine", ...ticks, ...mlabels, "#marker", "#note", "#headline"], { autoAlpha: 0, immediateRender: true }, 0);
+tl.set("#roof", { y: ROOF_DROP, immediateRender: true }, 0);
+tl.set("#pin", { scale: 0, immediateRender: true }, 0);
+tl.fromTo("#topbar", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, ease: "sine.out" }, 0.1);
+tl.fromTo(
+  "#sheet",
+  { autoAlpha: 0, y: 70, rotation: -4, clipPath: "inset(-20px -20px 100% -20px)" },
+  { autoAlpha: 1, y: 0, rotation: -1.2, clipPath: "inset(-20px -20px -20px -20px)", duration: 0.75, ease: "expo.out" },
+  0.2
+);
+tl.fromTo("#note", { autoAlpha: 0, y: -300, rotation: -16 }, { autoAlpha: 1, y: 0, rotation: -4, duration: 0.5, ease: "back.out(1.4)" }, 0.72);
+tl.fromTo("#pin", { scale: 0 }, { scale: 1, duration: 0.18, ease: "back.out(3)" }, 1.12);
+masks.forEach((m, i) => tl.to(m, { strokeDashoffset: 0, duration: 0.42, ease: "power2.inOut" }, 1.3 + i * 0.1));
+slots.forEach((s, i) => tl.fromTo(s, { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "sine.out" }, 1.45 + i * 0.1));
+tl.fromTo("#capital", { autoAlpha: 0, x: -560 }, { autoAlpha: 1, x: 0, duration: 0.38, ease: "power4.out" }, 1.95);
+tl.fromTo("#capital", { scaleX: 1 }, { scaleX: 0.97, duration: 0.06, ease: "power1.out", yoyo: true, repeat: 1, transformOrigin: "0% 50%" }, 2.31);
+tl.fromTo("#product", { autoAlpha: 1, scaleY: 0, transformOrigin: "50% 100%" }, { autoAlpha: 1, scaleY: 1, duration: 0.42, ease: "back.out(1.7)" }, 2.3);
+tl.to("#note", { x: 108, y: 7, scale: 0.66, rotation: 3, duration: 0.48, ease: "power3.inOut" }, 2.28);
+tl.fromTo("#eng", { autoAlpha: 1, y: -420 }, { y: 0, duration: 0.34, ease: "power2.in" }, 2.66);
+tl.fromTo("#eng", { scaleY: 1, scaleX: 1 }, { scaleY: 0.8, scaleX: 1.04, duration: 0.07, ease: "power1.out", transformOrigin: "50% 100%" }, 3);
+tl.to("#eng", { scaleY: 1, scaleX: 1, duration: 0.36, ease: "elastic.out(1, 0.45)" }, 3.07);
+tl.fromTo("#roof", { autoAlpha: 1, y: ROOF_DROP - 360, rotation: -9 }, { y: ROOF_DROP, rotation: 0, duration: 0.42, ease: "back.out(1.3)" }, 3.02);
+tl.to("#outline", { autoAlpha: 0, duration: 0.3, ease: "sine.in" }, 3.4);
+tl.to(slots, { autoAlpha: 0, duration: 0.2, ease: "sine.in" }, 3.4);
+tl.to("#roof", { y: 0, duration: 0.5, ease: "power3.inOut" }, 3.5);
+tl.fromTo("#lv2", { autoAlpha: 1, scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.3, ease: "power2.out" }, 3.52);
+tl.fromTo("#lv3", { autoAlpha: 1, scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.3, ease: "circ.out" }, 3.72);
+tl.to("#lv2 .wins i", { backgroundColor: "#6ae3ff", duration: 0.1, stagger: 0.05, ease: "none" }, 3.85);
+tl.to("#lv3 .wins i", { backgroundColor: "#6ae3ff", duration: 0.1, stagger: 0.05, ease: "none" }, 4);
+tl.fromTo("#flag", { autoAlpha: 1, scaleY: 0, transformOrigin: "0% 100%" }, { scaleY: 1, duration: 0.32, ease: "back.out(2.2)" }, 3.98);
+tl.fromTo("#rulerLine", { autoAlpha: 1, scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.6, ease: "power2.out" }, 3.55);
+ticks.forEach((t, k) => tl.fromTo(t, { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: 0.16, ease: "back.out(2)" }, 3.6 + k * 0.1));
+tl.to(mlabels, { autoAlpha: 1, duration: 0.25, stagger: 0.06, ease: "sine.out" }, 3.65);
+tl.fromTo("#marker", { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: 0.2, ease: "back.out(2.4)" }, 3.75);
+tl.to(ticks[0], { backgroundColor: "#2ecf9a", duration: 0.1, ease: "none" }, 3.9);
+tl.to(mlabels[0], { color: "#0f0f0f", duration: 0.1, ease: "none" }, 3.9);
+tl.to("#marker", { x: 165, duration: 0.2, ease: "power2.inOut" }, 3.92);
+tl.to("#marker", { x: 330, duration: 0.2, ease: "power2.inOut" }, 4.16);
+tl.to("#marker", { x: 510, duration: 0.2, ease: "power2.inOut" }, 4.4);
+tl.to("#marker", { x: 690, duration: 0.2, ease: "power2.inOut" }, 4.64);
+[4.12, 4.36, 4.6].forEach((t, i) => tl.to(ticks[i + 1], { backgroundColor: "#2ecf9a", duration: 0.1, ease: "none" }, t));
+[4.12, 4.36, 4.6, 4.84].forEach((t, i) => tl.to(mlabels[i + 1], { color: "#0f0f0f", duration: 0.1, ease: "none" }, t));
+tl.fromTo("#team", { autoAlpha: 0, x: 20 }, { autoAlpha: 1, x: 0, duration: 0.3, ease: "expo.out" }, 4.85);
+tl.fromTo("#headline", { autoAlpha: 0, x: -30 }, { autoAlpha: 1, x: 0, duration: 0.7, ease: "expo.out" }, 5);
+window.__timelines["incubation-b"] = tl;
+tl.seek(0);</script></body>
+</html>

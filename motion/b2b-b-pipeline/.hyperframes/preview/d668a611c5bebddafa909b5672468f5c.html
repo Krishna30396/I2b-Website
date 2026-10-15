@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script data-hf-gsap-fallback>
+(function(){
+  var cdnBase="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/";
+  var loaded={};
+  function loadFallback(file){
+    if(loaded[file])return loaded[file];
+    return loaded[file]=new Promise(function(ok,fail){
+      var s=document.createElement("script");
+      s.src=cdnBase+file;s.hfGsapFallback=true;s.onload=ok;s.onerror=fail;
+      document.head.appendChild(s);
+    });
+  }
+  document.addEventListener("error",function(e){
+    var t=e.target;
+    if(!t||t.tagName!=="SCRIPT"||!t.src||t.hfGsapFallback)return;
+    var m=t.src.match(/gsap[^/]*\/dist\/(.+\.js)/);
+    if(m)loadFallback(m[1]).catch(function(){
+      reportError(new Error("GSAP could not load from "+t.src+" or "+cdnBase+m[1]+", so this preview's animations will not play."));
+    });
+  },true);
+})();
+</script>
+<meta name="hyperframes-studio-preview"><script>(function(){var seen=window.__hfPreviewErrors=[];
+addEventListener("error",function(e){seen.push(e.message||String(e))});})();</script>
+<base href="/api/projects/b2b-b-pipeline/preview/"><style data-hyperframes-text-rendering="true">html,body,*{text-rendering:geometricPrecision}</style><script data-hf-after-fonts-fallback="">document.addEventListener("DOMContentLoaded", function () {
+  if (window.__hfAfterFontsClaimed) return;
+  var T = "text/hf-after-fonts";
+  var all = [].slice.call(document.querySelectorAll('script[type="text/hf-after-fonts"], script[type="text/hf-after-fonts+module"]'));
+  if (!all.length) return;
+  console.warn("[hyperframes] the runtime has no web-font gate; composition scripts run without waiting for fonts");
+  var late = function (el) { return el.type !== T || el.matches('[defer][src], [defer][data-hf-inlined-src]'); };
+  var queue = all.filter(function (el) { return !late(el); }).concat(all.filter(late));
+  (function next() {
+    var el = queue.shift();
+    if (!el) return;
+    var s = document.createElement("script");
+    for (var i = 0; i < el.attributes.length; i++) s.setAttribute(el.attributes[i].name, el.attributes[i].value);
+    if (el.type === T) s.removeAttribute("type"); else s.type = "module";
+    s.async = el.hasAttribute("async");
+    s.text = el.text;
+    var waits = s.type !== "module" && s.hasAttribute("src") && !s.async && !s.noModule;
+    if (waits) { s.addEventListener("load", next); s.addEventListener("error", next); }
+    el.replaceWith(s);
+    if (!waits) next();
+  })();
+});
+//# sourceURL=hyperframes://after-fonts-fallback</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, height=1080">
+    <title>I2B · B2B SaaS · B Pipeline</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>/* I2B Object System — shared object library (see ../DESIGN-SYSTEM.md).
+   Synced into each project as assets/i2b-objects.css by system/sync.mjs. */
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-600.woff2") format("woff2"); font-weight: 600; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-500.woff2") format("woff2"); font-weight: 500; }
+@font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+
+:root {
+  --ink: #0f0f0f;
+  --paper: #fafaf9;
+  --ground-light: #f3f2ef;
+  --ground-night: #0a0d14;
+  --live: #6ae3ff;
+  --c-mail: #1c75bc;
+  --c-sheet: #2ecf9a;
+  --c-chat: #b49ef5;
+  --c-invoice: #fcbb00;
+  --line: 3px;
+  --shadow: 6px 6px 0 var(--ink);
+  --f-body: "Inter", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, monospace;
+  --f-display: "Fraunces", Georgia, serif;
+}
+
+/* ---------- artefacts (the mess) ---------- */
+.art {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px 20px 22px;
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  font: 600 24px/1.2 var(--f-body);
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.art::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: var(--tc); border-right: var(--line) solid var(--ink); }
+.art .ico { width: 44px; height: 44px; margin-left: 14px; flex-shrink: 0; }
+.art .ico svg { width: 100%; height: 100%; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.art .ico svg .fillc { fill: var(--tc); }
+.art small { display: block; font: 500 16px var(--f-mono); color: #0f0f0fbf; margin-top: 4px; }
+.art.sheet { --tc: var(--c-sheet); }
+.art.mail { --tc: var(--c-mail); }
+.art.chat { --tc: var(--c-chat); border-radius: 26px 26px 26px 6px; }
+.art.invoice { --tc: var(--c-invoice); }
+
+/* ---------- units (the scale) ---------- */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 64px;
+  padding: 0 22px;
+  border-top: 2px solid var(--ink);
+  font: 600 22px var(--f-body);
+  color: var(--ink);
+  background: var(--paper);
+  white-space: nowrap;
+}
+.row .meta { font-weight: 400; color: #0f0f0fb3; }
+.row .dot { margin-left: auto; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); background: #d9dbe0; }
+.chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 70px; height: 32px; padding: 0 10px;
+  border: 2px solid var(--ink); border-radius: 999px;
+  font: 500 15px var(--f-mono); letter-spacing: .04em; color: var(--ink);
+  background: var(--tc);
+}
+.chip.sheet { --tc: var(--c-sheet); } .chip.mail { --tc: var(--c-mail); color: var(--paper); }
+.chip.chat { --tc: var(--c-chat); } .chip.invoice { --tc: var(--c-invoice); }
+
+.block {
+  display: flex; align-items: center; gap: 14px;
+  height: 58px; padding: 0 18px;
+  background: var(--paper); border: var(--line) solid var(--ink); border-radius: 12px;
+  box-shadow: 4px 4px 0 var(--ink);
+  font: 600 20px var(--f-body); color: var(--ink); white-space: nowrap;
+}
+.block .dot { margin-left: auto; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--ink); background: var(--c-sheet); }
+
+/* ---------- systems (the one) ---------- */
+.panel {
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+}
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px; padding: 0 24px;
+  background: var(--live); border-bottom: var(--line) solid var(--ink);
+  font: 600 26px var(--f-body); color: var(--ink);
+}
+.panel-head .live { display: inline-flex; align-items: center; gap: 8px; font: 500 16px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+.panel-head .live::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
+
+.label {
+  font: 500 22px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink);
+}
+.headline { font: 400 64px/1.05 var(--f-display); font-style: italic; letter-spacing: -.02em; color: var(--ink); }
+
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-600.woff2") format("woff2"); font-weight: 600; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-500.woff2") format("woff2"); font-weight: 500; }
+      @font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1080px; overflow: hidden; background: var(--ground-light); }
+      /* light ground (same as A · Sort): paper objects, ink outlines, ink hard shadows */
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        background-color: var(--ground-light);
+        background-image: radial-gradient(#0f0f0f1f 1.6px, transparent 1.6px);
+        background-size: 36px 36px;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      #scene { position: absolute; inset: 0; }
+      .topbar { position: absolute; left: 80px; right: 80px; top: 72px; display: flex; justify-content: space-between; }
+      #rails { position: absolute; inset: 0; width: 1080px; height: 1080px; }
+      #rails path { fill: none; stroke: #0f0f0f; stroke-width: 3; stroke-linecap: round; }
+      .art { z-index: 4; }
+      #a1 { left: 36px; top: 230px; }
+      #a2 { left: 56px; top: 390px; }
+      #a3 { left: 28px; top: 550px; }
+      #a4 { left: 60px; top: 710px; }
+      .hub { position: absolute; left: 462px; top: 438px; width: 184px; height: 184px; z-index: 5; }
+      .hub-core {
+        width: 100%; height: 100%; border-radius: 28px;
+        background: var(--live); border: var(--line) solid var(--ink); box-shadow: 8px 8px 0 var(--ink);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+        font: 500 18px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink); text-align: center;
+      }
+      .hub-core svg { width: 60px; height: 60px; fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .block { position: absolute; left: 708px; width: 312px; z-index: 3; }
+      .count { position: absolute; left: 708px; top: 262px; display: flex; flex-direction: column; gap: 4px; }
+      .count b { font: 500 44px var(--f-mono); color: var(--ink); }
+      .count span { font: 500 18px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: #0f0f0fa6; }
+      .headline { position: absolute; left: 80px; top: 902px; }</style>
+    
+  
+<script data-hyperframes-preview-runtime="1" src="/api/runtime.js"></script>
+<meta name="hyperframes-project-signature" content="34b55c5d40bd86dff92566d6">
+</head>
+  <body>
+    <div data-hf-id="hf-u0oy" id="root" data-composition-id="b2b-b" data-start="0" data-duration="6.5" data-fps="30" data-width="1080" data-height="1080">
+      <section data-hf-id="hf-0kdj" id="scene" class="clip" data-start="0" data-duration="6.5" data-track-index="0">
+        <div data-hf-id="hf-82kq" class="topbar" id="topbar"><span data-hf-id="hf-oj43" class="label">B2B SaaS</span><span data-hf-id="hf-hfqg" class="label">I2B</span></div>
+        <svg data-hf-id="hf-h7q5" id="rails" viewBox="0 0 1080 1080" aria-hidden="true"><path data-hf-id="hf-nlli" id="p1" /><path data-hf-id="hf-jnhh" id="p2" /><path data-hf-id="hf-mxss" id="p3" /><path data-hf-id="hf-6db7" id="p4" /></svg>
+
+        <div data-hf-id="hf-8eqf" class="art sheet" id="a1" data-layout-allow-overflow="true" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><span data-hf-id="hf-gm9w" class="ico"><svg data-hf-id="hf-b65t" viewBox="0 0 44 44"><rect data-hf-id="hf-wlha" x="5" y="5" width="34" height="34" rx="4" class="fillc" /><path data-hf-id="hf-qq0h" d="M5 16h34M5 27h34M17 5v34" /></svg></span><span data-hf-id="hf-41eq">Shipments_v7_FINAL.xlsx<small data-hf-id="hf-fmc0">edited 14 times</small></span></div>
+        <div data-hf-id="hf-mn66" class="art mail" id="a2" data-layout-allow-overflow="true" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><span data-hf-id="hf-qj98" class="ico"><svg data-hf-id="hf-57mt" viewBox="0 0 44 44"><rect data-hf-id="hf-1tz0" x="4" y="9" width="36" height="26" rx="4" class="fillc" /><path data-hf-id="hf-m5xv" d="M5 11l17 13 17-13" /></svg></span><span data-hf-id="hf-jj84">Re: Re: delay at port<small data-hf-id="hf-3hmn">12 replies</small></span></div>
+        <div data-hf-id="hf-g3po" class="art chat" id="a3" data-layout-allow-overflow="true" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><span data-hf-id="hf-pcc5" class="ico"><svg data-hf-id="hf-6ejw" viewBox="0 0 44 44"><path data-hf-id="hf-p0qk" d="M6 8h32v22H18l-8 7v-7H6z" class="fillc" /></svg></span><span data-hf-id="hf-8e5e">Driver: stuck at gate 3<small data-hf-id="hf-417f">WhatsApp · 6:42</small></span></div>
+        <div data-hf-id="hf-9lty" class="art invoice" id="a4" data-layout-allow-overflow="true" data-layout-allow-overlap="true" data-layout-allow-occlusion="true"><span data-hf-id="hf-pqn6" class="ico"><svg data-hf-id="hf-608v" viewBox="0 0 44 44"><path data-hf-id="hf-6mh2" d="M10 4h17l8 8v28H10z" class="fillc" /><path data-hf-id="hf-cqbz" d="M27 4v8h8M16 22h12M16 29h9" /></svg></span><span data-hf-id="hf-e3fe">Invoice_0423.pdf<small data-hf-id="hf-3ks1">unmatched</small></span></div>
+
+        <div data-hf-id="hf-kr5w" class="hub" id="hub"><div data-hf-id="hf-q4o3" class="hub-core" id="hubCore">
+          <svg data-hf-id="hf-piht" viewBox="0 0 60 60"><rect data-hf-id="hf-tafa" x="8" y="8" width="18" height="18" rx="3" /><rect data-hf-id="hf-5ovr" x="34" y="8" width="18" height="18" rx="3" /><rect data-hf-id="hf-8hdn" x="8" y="34" width="18" height="18" rx="3" /><rect data-hf-id="hf-xg5r" x="34" y="34" width="18" height="18" rx="3" fill="#0f0f0f" /></svg>
+          <span data-hf-id="hf-4fgw">One system</span></div></div>
+
+        <div data-hf-id="hf-gnp8" class="count" id="count"><span data-hf-id="hf-8uik">Clean records out</span><b data-hf-id="hf-h22r" id="countNum">0</b></div>
+
+        <div data-hf-id="hf-3z15" class="block" id="b1"><span data-hf-id="hf-5x6h" class="chip sheet">XLSX</span>SH-2041<span data-hf-id="hf-9gry" class="dot"></span></div>
+        <div data-hf-id="hf-vcwb" class="block" id="b2"><span data-hf-id="hf-bz2v" class="chip mail">MAIL</span>SH-2044<span data-hf-id="hf-zcc2" class="dot"></span></div>
+        <div data-hf-id="hf-jajh" class="block" id="b3"><span data-hf-id="hf-5k5p" class="chip chat">CHAT</span>SH-2047<span data-hf-id="hf-zqn3" class="dot"></span></div>
+        <div data-hf-id="hf-n766" class="block" id="b4"><span data-hf-id="hf-ad00" class="chip invoice">PDF</span>INV-0423<span data-hf-id="hf-04y4" class="dot"></span></div>
+        <div data-hf-id="hf-5urt" class="block" id="b5"><span data-hf-id="hf-1ybx" class="chip sheet">XLSX</span>SH-2052<span data-hf-id="hf-0j95" class="dot"></span></div>
+        <div data-hf-id="hf-qrfu" class="block" id="b6"><span data-hf-id="hf-x5jr" class="chip mail">MAIL</span>SH-2058<span data-hf-id="hf-0xk6" class="dot"></span></div>
+        <div data-hf-id="hf-jf2z" class="block" id="b7"><span data-hf-id="hf-j43l" class="chip chat">CHAT</span>SH-2063<span data-hf-id="hf-1bv7" class="dot"></span></div>
+        <div data-hf-id="hf-chu9" class="block" id="b8"><span data-hf-id="hf-wilk" class="chip invoice">PDF</span>INV-0431<span data-hf-id="hf-1q68" class="dot"></span></div>
+
+        <div data-hf-id="hf-y8b9" class="headline" id="headline">Many inputs. One system.</div>
+      </section>
+    </div>
+
+    
+  <script type="text/hf-after-fonts">const tl = gsap.timeline({ paused: true });
+const S = document.getElementById("root");
+const box = (el) => {
+  const r = el.getBoundingClientRect(), s = S.getBoundingClientRect();
+  return { l: r.left - s.left, t: r.top - s.top, w: r.width, h: r.height, cx: r.left - s.left + r.width / 2, cy: r.top - s.top + r.height / 2 };
+};
+const ART_SCALE = 0.78;
+const blocks = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => document.getElementById("b" + i));
+blocks.forEach((b, k) => {
+  b.style.top = 800 - k * 64 + "px";
+});
+const H = box(document.getElementById("hub"));
+const arts = ["#a1", "#a2", "#a3", "#a4"].map((q) => document.querySelector(q));
+const AR = arts.map(box);
+AR.forEach((a, i) => {
+  const x1 = a.cx + a.w * ART_SCALE / 2 + 10, y1 = a.cy, x2 = H.l - 6, y2 = H.cy + (i - 1.5) * 34;
+  const mx = (x1 + x2) / 2;
+  document.getElementById("p" + (i + 1)).setAttribute("d", `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`);
+});
+const paths = [1, 2, 3, 4].map((i) => document.getElementById("p" + i));
+const lens = paths.map((p) => p.getTotalLength());
+const BB = blocks.map(box);
+tl.set(paths, { strokeDasharray: (i) => lens[i], strokeDashoffset: (i) => lens[i], immediateRender: true }, 0);
+tl.set(blocks, { autoAlpha: 0, immediateRender: true }, 0);
+tl.fromTo("#topbar", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, ease: "sine.out" }, 0.1);
+[[-6, "expo.out", 0.7], [4, "back.out(1.3)", 0.8], [-3, "expo.out", 0.65], [6, "back.out(1.1)", 0.85]].forEach(([r, e, d], i) => {
+  tl.fromTo(arts[i], { x: -480, rotation: r * 3, scale: ART_SCALE, autoAlpha: 0 }, { x: 0, rotation: r, scale: ART_SCALE, autoAlpha: 1, duration: d, ease: e }, 0.2 + i * 0.12);
+});
+tl.fromTo("#hub", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.55, ease: "back.out(1.8)" }, 1);
+paths.forEach((p, i) => tl.to(p, { strokeDashoffset: 0, duration: 0.45, ease: "power2.inOut" }, 1.3 + i * 0.08));
+arts.forEach((a, i) => {
+  const t = 1.95 + i * 0.16;
+  tl.to(a, { x: H.cx - AR[i].cx, y: H.cy - AR[i].cy, rotation: 0, scale: 0.18, duration: 0.5, ease: "power3.in" }, t);
+  tl.to(a, { autoAlpha: 0, duration: 0.1, ease: "none" }, t + 0.42);
+  tl.fromTo("#hubCore", { scale: 1 }, { scale: 1.07, duration: 0.07, ease: "power1.out", yoyo: true, repeat: 1 }, t + 0.48);
+});
+tl.to(paths, { opacity: 0.28, duration: 0.4, ease: "sine.inOut" }, 2.75);
+blocks.forEach((b, k) => {
+  const t = 2.95 + k * 0.2;
+  tl.fromTo(
+    b,
+    { autoAlpha: 0, x: H.cx - BB[k].cx, y: H.cy - BB[k].cy, scale: 0.3 },
+    { autoAlpha: 1, x: 0, y: 0, scale: 1, duration: 0.42, ease: k % 2 ? "back.out(1.5)" : "power3.out" },
+    t
+  );
+  tl.to(b.querySelector(".dot"), { backgroundColor: "#6ae3ff", duration: 0.12, ease: "none" }, t + 0.42);
+});
+tl.fromTo("#count", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: "sine.out" }, 2.95);
+const n = { v: 0 };
+tl.to(n, { v: 2400, duration: 1.8, ease: "power1.inOut", onUpdate: () => {
+  document.getElementById("countNum").textContent = Math.round(n.v).toLocaleString("en-US") + " / day";
+} }, 3);
+tl.fromTo("#headline", { autoAlpha: 0, x: -30 }, { autoAlpha: 1, x: 0, duration: 0.7, ease: "expo.out" }, 5);
+window.__timelines["b2b-b"] = tl;
+tl.seek(0);</script></body>
+</html>

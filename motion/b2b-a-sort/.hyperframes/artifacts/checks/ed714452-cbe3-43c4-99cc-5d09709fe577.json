@@ -1,0 +1,405 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "gsap_timeline_set_initial_hide",
+        "severity": "warning",
+        "message": "Initial hidden state for \"#r1, #r2, #r3, #r4, #r5, #r6, #r7, #r8\" is set via tl.set(...) at position 0 inside the paused timeline. A zero-duration set at 0 does not render while the playhead sits exactly at 0, so frame 0 shows the un-hidden state.",
+        "selector": "#r1, #r2, #r3, #r4, #r5, #r6, #r7, #r8",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-a-sort\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use gsap.set(...) (immediate, outside the timeline) for initial states, or author the hidden state directly in CSS/attributes."
+      },
+      {
+        "code": "gsap_timeline_set_initial_hide",
+        "severity": "warning",
+        "message": "Initial hidden state for \"#headB, #live\" is set via tl.set(...) at position 0 inside the paused timeline. A zero-duration set at 0 does not render while the playhead sits exactly at 0, so frame 0 shows the un-hidden state.",
+        "selector": "#headB, #live",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-a-sort\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use gsap.set(...) (immediate, outside the timeline) for initial states, or author the hidden state directly in CSS/attributes."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene\"> is a timeline element that contains nested <div id=\"topbar\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Srikrishna\\Desktop\\Design Projects\\New folder\\i2b-redesign\\motion\\b2b-a-sort\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 6,
+    "findings": [
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 2.528,
+        "selector": "#r2 > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 384.92,
+          "top": 339,
+          "right": 517.77,
+          "bottom": 365,
+          "width": 132.85,
+          "height": 26
+        },
+        "containerSelector": "#a2 > span:nth-of-type(2) > small:nth-of-type(1)",
+        "text": "Delay at port",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 384.92,
+          "y": 339,
+          "width": 132.85,
+          "height": 26
+        },
+        "firstSeen": 2.5,
+        "lastSeen": 2.528,
+        "occurrences": 2,
+        "heldMs": 28.000000000000025,
+        "times": [
+          2.5,
+          2.528
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 0.361,
+        "selector": "#a1 > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -5.15,
+          "top": 241.75,
+          "right": 289.04,
+          "bottom": 319.55,
+          "width": 294.19,
+          "height": 77.8
+        },
+        "containerSelector": "#root",
+        "text": "Shipments_v7_FINAL.xlsx",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1080,
+          "width": 1080,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 5.15
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -5.15,
+          "y": 241.75,
+          "width": 294.19,
+          "height": 77.8
+        },
+        "firstSeen": 0.361,
+        "lastSeen": 0.361,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          0.361
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "info",
+        "time": 0.361,
+        "selector": "#a1",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": -106.44,
+          "top": 215.54,
+          "right": 323.84,
+          "bottom": 384.26,
+          "width": 430.28,
+          "height": 168.72
+        },
+        "containerSelector": "#root",
+        "text": "Shipments_v7_FINAL.xlsx edited 14 times",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1080,
+          "width": 1080,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 106.44
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -106.44,
+          "y": 215.54,
+          "width": 430.28,
+          "height": 168.72
+        },
+        "firstSeen": 0.361,
+        "lastSeen": 0.361,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          0.361
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 2.528,
+        "selector": "#r2 > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 384.92,
+          "top": 339,
+          "right": 517.77,
+          "bottom": 365,
+          "width": 132.84,
+          "height": 26
+        },
+        "containerSelector": "#a2",
+        "text": "Delay at port",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.67,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 384.92,
+          "y": 339,
+          "width": 132.84,
+          "height": 26
+        },
+        "firstSeen": 2.528,
+        "lastSeen": 2.528,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.528
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 2.75,
+        "selector": "#r4 > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 391.7,
+          "top": 467,
+          "right": 562.81,
+          "bottom": 493,
+          "width": 171.11,
+          "height": 26
+        },
+        "containerSelector": "#a4 > span:nth-of-type(2)",
+        "text": "Invoice matched",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 391.7,
+          "y": 467,
+          "width": 171.11,
+          "height": 26
+        },
+        "firstSeen": 2.75,
+        "lastSeen": 2.75,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.75
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 3.972,
+        "selector": "#r5",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 163,
+          "top": 513.11,
+          "right": 917,
+          "bottom": 577.11,
+          "width": 754,
+          "height": 64
+        },
+        "containerSelector": "#rows",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 163,
+          "top": 255,
+          "right": 917,
+          "bottom": 538,
+          "width": 754,
+          "height": 283
+        },
+        "overflow": {
+          "bottom": 39.11
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 163,
+          "y": 513.11,
+          "width": 754,
+          "height": 64
+        },
+        "firstSeen": 3.972,
+        "lastSeen": 3.972,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.972
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 3.972,
+        "selector": "#r6",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 163,
+          "top": 589.45,
+          "right": 917,
+          "bottom": 653.45,
+          "width": 754,
+          "height": 64
+        },
+        "containerSelector": "#rows",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 163,
+          "top": 255,
+          "right": 917,
+          "bottom": 538,
+          "width": 754,
+          "height": 283
+        },
+        "overflow": {
+          "bottom": 115.45
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 163,
+          "y": 589.45,
+          "width": 754,
+          "height": 64
+        },
+        "firstSeen": 3.972,
+        "lastSeen": 3.972,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.972
+        ]
+      }
+    ],
+    "duration": 6.5,
+    "samples": [
+      0.361,
+      1.083,
+      1.806,
+      2.528,
+      3.25,
+      3.972,
+      4.694,
+      5.417,
+      6.139
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 7,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      0.361,
+      1.806,
+      3.25,
+      4.694,
+      6.139
+    ],
+    "checked": 92,
+    "passed": 92
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}
