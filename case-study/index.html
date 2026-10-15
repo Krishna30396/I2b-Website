@@ -173,6 +173,21 @@ textarea.take{width:100%;min-height:90px;border-radius:14px;border:1px solid var
 .notes li{padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#fff}
 .notes li::before{content:"✓ ";color:var(--green);font-weight:700}
 @media (max-width:760px){.phones{grid-template-columns:1fr 1fr}.phones .side{grid-column:1/-1}.phone{width:100%}}
+.loopsteps{list-style:none;padding:0;margin:0 0 18px;display:flex;flex-wrap:wrap;gap:6px}
+.loopsteps li{display:inline-flex;align-items:center;gap:6px;font:500 12px var(--f-mono);padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:#fff}
+.loopsteps span{width:18px;height:18px;border-radius:50%;background:var(--ink);color:var(--accent);display:grid;place-items:center;font-size:10px}
+.loopcols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.loopcol{border:1px solid var(--border);border-radius:16px;background:#fff;padding:12px;display:grid;gap:10px;align-content:start;min-width:0}
+.loopshot{aspect-ratio:4/3;min-height:0;background:#fafaf9}
+.loopshot img{object-position:center}
+.loopcol .ln{font:400 20px var(--f-display)}
+.loopcol dl{margin:0;display:grid;gap:4px;font-size:13.5px}
+.loopcol dt{font:500 10px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.loopcol dd{margin:0}
+.looprules{font-size:13.5px;color:var(--muted);margin:16px 0 0}
+.looprules b,.looptest b{color:var(--ink);display:block;font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.looptest{margin-top:12px;padding:14px 16px;border-radius:14px;border:1px dashed var(--blue);background:#1c75bc08;font-size:14px}
+@media (max-width:860px){.loopcols{grid-template-columns:1fr}}
 /* toc */
 .toc{position:fixed;inset:0;background:#0009;z-index:20;display:flex;justify-content:flex-end}
 .toc nav{width:min(360px,90vw);height:100%;background:var(--light-1);padding:20px;overflow:auto}
@@ -248,7 +263,17 @@ textarea.take{width:100%;min-height:90px;border-radius:14px;border:1px solid var
 
     fix: s => `<div class="slide">${kick(s, `Develop · fix ${s.n} of ${FIXES.length}`)}<h2>${esc(s.title)}</h2><div class="cols">
       <div class="talk">${s.beats.slice(0, Math.min(beat + 1, s.beats.length)).map(b => bubble(esc(b.say))).join('')}${beat >= s.beats.length ? pcards(s.p) : '<p class="next-tip">NEXT →</p>'}</div>
-      ${s.compare ? `<div class="cmp" id="cmp"><img src="${s.compare.after}" alt="Redesigned hero"><img class="b" src="${s.compare.before}" alt="Original hero"><span class="line"></span><span class="tag l">BEFORE</span><span class="tag r">AFTER</span><input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after"></div>` : media(s.img)}</div></div>`,
+      ${s.compare ? `<div class="cmp" id="cmp"><img src="${s.compare.after}" alt="After"><img class="b" src="${s.compare.before}" alt="Before"><span class="line"></span><span class="tag l">${esc(s.compare.lb || 'BEFORE')}</span><span class="tag r">${esc(s.compare.la || 'AFTER')}</span><input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after"></div>` : media(s.img)}</div></div>`,
+
+    critique: s => `<div class="slide">${kick(s, 'Expert review · v1.1')}<h2>${esc(s.title)}</h2><p class="intro">${esc(s.intro)}</p>
+      <div class="tablewrap"><table><thead><tr><th>What we saw</th><th>Why it hurts</th><th>What changed in v1.2</th></tr></thead><tbody>${s.rows.map(r => `<tr><td class="d">${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('')}</tbody></table></div>${pcards(s.p)}</div>`,
+
+    loops: s => `<div class="slide">${kick(s, 'Develop · motion design loops')}<h2>${esc(s.title)}</h2><p class="intro">${esc(s.intro)}</p>
+      <ol class="loopsteps">${s.steps.map((t, k) => `<li><span>${k + 1}</span>${esc(t)}</li>`).join('')}</ol>
+      <div class="loopcols">${s.loops.map(l => `<div class="loopcol"><figure class="shot loopshot" style="margin:0"><img src="${l.img}" alt="${esc(l.name)} motion loop, end frame"></figure>
+        <b class="ln">${esc(l.name)}</b><dl><dt>Message</dt><dd>${esc(l.msg)}</dd><dt>Chosen</dt><dd>${esc(l.chosen)}</dd><dt>Rejected</dt><dd>${esc(l.rejected)}</dd><dt>Round 2</dt><dd>${esc(l.r2)}</dd></dl></div>`).join('')}</div>
+      <p class="looprules"><b>Shared rules</b> ${esc(s.rules)}</p>
+      <div class="looptest"><b>Is it too much? The test</b> ${esc(s.test)}</div>${pcards(s.p)}</div>`,
 
     headings: s => `<div class="slide">${kick(s, 'Validate · layer-cake scan')}<h2>${esc(s.title)}</h2><p class="intro">${esc(s.intro)}</p>
       <div class="hcols"><div class="hcol"><h3>Before: headings only</h3><ol>${s.before.map(h => `<li>${esc(h)}</li>`).join('')}</ol></div><div class="hcol after"><h3>After: headings only</h3><ol>${s.after.map(h => `<li>${esc(h)}</li>`).join('')}</ol></div></div>${pcards(s.p)}</div>`,
