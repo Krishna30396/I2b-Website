@@ -265,13 +265,13 @@
 <footer class="footer" data-surface="light">
   <div class="wrap">
     <!-- Start a conversation, merged into the closing statement -->
-    <div class="foot-close with-form" id="contact">
+    <div class="foot-close with-form light-form" id="contact">
       <div>
         <h2 id="h-contact">Let's build something <em>that lasts</em>.</h2>
         <p class="foot-sub">Two quick questions and your note goes straight to the right person.</p>
       </div>
       <div class="form-card">
-        <form data-routed novalidate data-label-founder="Send to the founders" data-label-other="Send message">
+        <form data-routed data-default="founder" novalidate data-label-founder="Send to the founders" data-label-other="Send message">
           <fieldset class="intents">
             <legend>Who's getting in touch?</legend>
             <div class="intent"><input type="radio" name="intent" id="i-f" value="founder"><label for="i-f"><b>I'm a founder</b><span>I have an idea or an early product</span></label></div>
@@ -285,8 +285,7 @@
           </div>
           <div class="fields" data-for="founder" hidden style="margin-top:14px">
             <div class="field"><label for="f-idea">Your idea in one line</label><input id="f-idea" name="idea" required data-err="One line is enough."><span class="err" aria-live="polite"></span></div>
-            <div class="field"><label for="f-stage">Stage</label><select id="f-stage" name="stage"><option>Just an idea</option><option>Prototype</option><option>Early users</option><option>Revenue</option></select></div>
-            <p class="next-note" style="margin:0">Want to share more? Use the <a class="link" style="color:var(--ink-light)" href="build.html">full founder application</a>.</p>
+            <p class="next-note" style="margin:0">Want to share more? Use the <a class="link" href="build.html">full founder application</a>.</p>
           </div>
           <div class="fields" data-for="other" hidden style="margin-top:14px">
             <div class="field"><label for="o-topic">What's it about?</label><select id="o-topic" name="topic"><option value="business">A platform for my business</option><option value="careers">Careers at I2B</option><option value="investors">Investing or partnering</option><option value="press">Press</option><option value="other">Something else</option></select></div>
@@ -294,7 +293,7 @@
           </div>
           <div style="margin-top:22px;display:grid;gap:10px">
             <button class="btn btn-primary" type="submit" hidden style="justify-content:center"><span class="lbl">Send</span> <span class="arr">→</span></button>
-            <p class="next-note" aria-live="polite"></p>
+            <p class="next-note" data-note aria-live="polite"></p>
           </div>
         </form>
         <div class="success" hidden tabindex="-1">

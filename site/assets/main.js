@@ -138,7 +138,7 @@
     const groups = [...form.querySelectorAll('.fields[data-for]')];
     const shared = form.querySelector('.fields[data-shared]');
     const submit = form.querySelector('[type=submit]');
-    const note = form.querySelector('.next-note');
+    const note = form.querySelector('[data-note]') || form.querySelector('.next-note');
     const notes = { founder: 'Goes straight to the founding team. Expect a reply within 5 working days.', other: 'We route it to the right person and usually reply within 3 working days.' };
     const route = v => {
       groups.forEach(g => { const on = g.dataset.for === v; g.hidden = !on; g.querySelectorAll('input,textarea,select').forEach(f => f.disabled = !on); });
