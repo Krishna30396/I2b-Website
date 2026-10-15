@@ -1,167 +1,150 @@
-// I2B redesign · v1.2 behaviour. No dependencies; every animation is gated on reduced motion.
+// I2B redesign — shared behaviour. No dependencies.
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const wait = ms => new Promise(r => setTimeout(r, ms));
+  document.documentElement.classList.remove('no-js');
 
-  /* ---------- nav: mobile menu ---------- */
+  /* ---------- nav: mobile menu + light/dark surface ---------- */
   const nav = document.querySelector('.nav');
-  const menuBtn = nav?.querySelector('.menu-btn');
-  menuBtn?.addEventListener('click', () => menuBtn.setAttribute('aria-expanded', nav.classList.toggle('open')));
-
-  /* ---------- reveal-on-enter (plays once; content is visible without JS) ---------- */
-  const io = new IntersectionObserver(entries => entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    e.target.classList.add('in');
-    io.unobserve(e.target);
-  }), { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
-  document.querySelectorAll('.reveal').forEach(el => reduce ? el.classList.add('in') : io.observe(el));
-
-  /* ---------- hero: the real portfolio arrives, then the open slot draws in ---------- */
-  const folio = document.querySelector('.portfolio');
-  if (folio) {
-    if (reduce) folio.classList.remove('anim');
-    else requestAnimationFrame(() => setTimeout(() => {
-      folio.classList.add('play');
-      setTimeout(() => folio.classList.add('done'), 2000);
-    }, 350));
+  if (nav) {
+    const btn = nav.querySelector('.menu-btn');
+    btn?.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    });
+    const lightSecs = [...document.querySelectorAll('[data-surface="light"]')];
+    const setSurface = () => {
+      const y = 44; // nav centre line
+      const onLight = lightSecs.some(s => { const r = s.getBoundingClientRect(); return r.top <= y && r.bottom >= y; });
+      nav.classList.toggle('on-light', onLight);
+    };
+    addEventListener('scroll', setSurface, { passive: true });
+    setSurface();
   }
 
-  /* ---------- What we build: three motion loops ----------
-     Trigger: loop ≥50% in view AND 300 ms after its headline has appeared.
-     Sequencing: never two at once; 600 ms gap after the previous loop ends.
-     Duration ~1.8–2.2 s, then hold the end frame. Replay on hover/focus (desktop) or tap. */
-  const LOOP_MS = 2200;
-  let queueEnd = 0;
-  const prepare = loop => {
-    if (loop.classList.contains('l1')) {
-      loop.querySelectorAll('.art').forEach(a => {
-        const row = loop.querySelector('.' + a.dataset.to);
-        const ax = a.offsetLeft + a.offsetWidth / 2, ay = a.offsetTop + a.offsetHeight / 2;
-        const rx = row.offsetLeft + row.offsetWidth / 2, ry = row.offsetTop + row.offsetHeight / 2;
-        a.style.setProperty('--dx', (rx - ax) + 'px');
-        a.style.setProperty('--dy', (ry - ay) + 'px');
-      });
-    }
-    if (loop.classList.contains('l2')) {
-      const list = loop.querySelector('.list'), mid = list.offsetHeight / 2;
-      loop.querySelectorAll('.item').forEach((it, i) => {
-        it.style.setProperty('--i', i);
-        it.style.setProperty('--sq', (mid - (it.offsetTop + it.offsetHeight / 2)) + 'px');
-      });
-    }
-  };
-  const play = loop => {
-    loop.classList.remove('play', 'done');
-    prepare(loop);
-    void loop.offsetWidth;
-    loop.classList.add('play');
-    clearTimeout(loop._t);
-    loop._t = setTimeout(() => loop.classList.add('done'), LOOP_MS);
-  };
-  const loops = [...document.querySelectorAll('.loop')];
-  loops.forEach(loop => {
-    if (reduce) { prepare(loop); loop.classList.add('rm', 'play', 'done'); return; }
-    const head = loop.closest('.brow')?.querySelector('.btext');
-    const lo = new IntersectionObserver(async ([e]) => {
+  /* ---------- reveal-on-enter (plays once) ---------- */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
       if (!e.isIntersecting) return;
-      lo.disconnect();
-      // wait for the headline to be in, then +300 ms, then for the queue
-      for (let n = 0; n < 40 && head && !head.classList.contains('in'); n++) await wait(50);
-      const now = performance.now();
-      const start = Math.max(now + 300, queueEnd + 600);
-      queueEnd = start + LOOP_MS;
-      await wait(start - now);
-      play(loop);
-    }, { threshold: 0.5 });
-    lo.observe(loop);
-    const replay = () => { if (loop.classList.contains('done')) play(loop); };
-    if (finePointer) loop.addEventListener('mouseenter', replay);
-    loop.addEventListener('focus', replay);
-    loop.addEventListener('click', replay);
-    loop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); replay(); } });
-  });
-  addEventListener('resize', () => loops.forEach(l => { if (l.classList.contains('play')) prepare(l); }));
+      e.target.classList.add('in');
+      if (e.target.dataset.count) countUp(e.target);
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal, [data-anim], [data-count]').forEach(el => io.observe(el));
 
-  /* ---------- How we build: "the thing you leave with" ---------- */
-  const STAGES = [
-    { word: 'Problem',  line: 'You leave with <b>a sharp problem</b>, and the people who feel it.', you: 10 },
-    { word: 'Validate', line: 'You leave with <b>a tested prototype</b>.', you: 28 },
-    { word: 'Build',    line: 'You leave with <b>a v1 you own</b>.', you: 50 },
-    { word: 'Launch',   line: 'You leave with <b>paying customers</b>.', you: 76 },
-    { word: 'Scale',    line: 'You leave with <b>your own team</b>, ready to lead.', you: 100 }
-  ];
-  const how = document.querySelector('.how');
-  if (how) {
-    const track = how.querySelector('.how-track'), obj = how.querySelector('.obj');
-    const counter = how.querySelector('.counter'), words = how.querySelector('.stage-word'), lines = how.querySelector('.stage-line');
-    const bar = how.querySelector('.own-bar i');
-    STAGES.forEach((s, i) => {
-      counter.insertAdjacentHTML('beforeend', `<li><button type="button" aria-label="Stage ${i + 1}: ${s.word}">${i + 1}</button></li>`);
-      words.insertAdjacentHTML('beforeend', `<span>${s.word}</span>`);
-      lines.insertAdjacentHTML('beforeend', `<span>${s.line}</span>`);
-    });
-    const btns = [...counter.querySelectorAll('button')], wSpans = [...words.children], lSpans = [...lines.children];
-    let cur = 0;
-    const set = n => {
-      if (n === cur) return; cur = n;
-      obj.dataset.stage = n;
-      wSpans.forEach((w, i) => w.classList.toggle('on', i === n - 1));
-      lSpans.forEach((l, i) => l.classList.toggle('on', i === n - 1));
-      btns.forEach((b, i) => { b.toggleAttribute('aria-current', i === n - 1); if (i === n - 1) b.setAttribute('aria-current', 'step'); b.classList.toggle('past', i < n - 1); });
-      bar.style.setProperty('--you', STAGES[n - 1].you + '%');
+  function countUp(el) {
+    const end = +el.dataset.count, suffix = el.dataset.suffix || '';
+    if (reduce) { el.innerHTML = end + suffix; return; }
+    const t0 = performance.now(), dur = 800;
+    const step = t => {
+      const p = Math.min(1, (t - t0) / dur), v = Math.round(end * (1 - Math.pow(1 - p, 3)));
+      el.innerHTML = v + suffix;
+      if (p < 1) requestAnimationFrame(step);
     };
-    const pinned = () => track.offsetParent !== null;
-    const geo = () => { const r = track.getBoundingClientRect(); return { top: scrollY + r.top, span: r.height - innerHeight, r }; };
-    const stageTop = i => { const g = geo(); return g.top + g.span * (i + 0.5) / STAGES.length; };
-    // synchronous on purpose: one rect read per scroll event, and no frame-dependency
-    const onScroll = () => {
-      if (!pinned()) return;
-      const { r, span } = geo();
-      const p = Math.min(0.999, Math.max(0, -r.top / span));
-      set(Math.floor(p * STAGES.length) + 1);
-    };
-    addEventListener('scroll', onScroll, { passive: true });
-    // gentle snap to the current stage once scrolling settles inside the pinned range
-    if ('onscrollend' in window) addEventListener('scrollend', () => {
-      if (!pinned()) return;
-      const { r } = geo();
-      if (r.top > 0 || r.bottom < innerHeight) return;
-      const target = stageTop(cur - 1);
-      if (Math.abs(target - scrollY) > 24) scrollTo({ top: target, behavior: 'smooth' });
-    });
-    btns.forEach((b, i) => b.addEventListener('click', () => scrollTo({ top: stageTop(i), behavior: 'smooth' })));
-    set(1); onScroll();
-
-    // stacked frames for mobile and reduced motion: same object, five states, one line each
-    const stack = how.querySelector('.how-stack');
-    STAGES.forEach((s, i) => {
-      const f = document.createElement('div');
-      f.className = 'frame';
-      f.innerHTML = `<div><span class="num">STAGE ${i + 1} / 5</span><h3>${s.word}</h3><p>${s.line}</p><div class="own"><div class="own-bar"><i style="--you:${s.you}%"></i></div><div class="own-labels"><span class="i2b">I2B leads</span><span>You lead</span></div></div></div>`;
-      const o = obj.cloneNode(true);
-      o.dataset.stage = i + 1;
-      f.append(o);
-      stack.append(f);
-    });
+    requestAnimationFrame(step);
   }
 
-  /* ---------- routed contact / application form (two doors) ---------- */
+  /* ---------- hero: scattered nodes resolve into a connected structure ---------- */
+  const cv = document.querySelector('.hero canvas');
+  if (cv) {
+    const ctx = cv.getContext('2d');
+    let W, H, dpr, nodes = [], t0 = performance.now();
+    const N = innerWidth < 700 ? 34 : 64;
+    const rand = (a, b) => a + Math.random() * (b - a);
+    function layout() {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      W = cv.clientWidth; H = cv.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // target: a loose lattice on the right side (the "intelligent business")
+      const cx = W * .5, cy = H * .5, R = W < 700 ? Math.min(W, H) * .62 : Math.min(W * .34, H * .5);
+      nodes = Array.from({ length: N }, (_, i) => {
+        const ring = i % 3, a = (i / N) * Math.PI * 2 * 3 + ring * .4;
+        const r = R * (.62 + ring * .2);
+        return { sx: rand(0, W), sy: rand(0, H), tx: cx + Math.cos(a) * r, ty: cy + Math.sin(a) * r * .8, ph: rand(0, 6.28), hub: i % 9 === 0 };
+      });
+    }
+    const ease = p => 1 - Math.pow(1 - p, 4);
+    function frame(now) {
+      const p = reduce ? 1 : ease(Math.min(1, (now - t0 - 300) / 2200));
+      const k = Math.max(0, p);
+      ctx.clearRect(0, 0, W, H);
+      const pts = nodes.map(n => {
+        const drift = reduce ? 0 : Math.sin(now / 2400 + n.ph) * 3;
+        return { x: n.sx + (n.tx - n.sx) * k + drift, y: n.sy + (n.ty - n.sy) * k + drift * .6, hub: n.hub };
+      });
+      const link = 140 * k + 20;
+      for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = Math.hypot(dx, dy);
+        if (d < link) {
+          ctx.strokeStyle = `rgba(106,227,255,${(1 - d / link) * .32 * k})`;
+          ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke();
+        }
+      }
+      pts.forEach(q => {
+        ctx.fillStyle = q.hub ? 'rgba(106,227,255,.95)' : 'rgba(250,250,250,.55)';
+        ctx.beginPath(); ctx.arc(q.x, q.y, q.hub ? 2.6 : 1.5, 0, 6.283); ctx.fill();
+        if (q.hub && k > .9) { ctx.fillStyle = 'rgba(106,227,255,.12)'; ctx.beginPath(); ctx.arc(q.x, q.y, 9, 0, 6.283); ctx.fill(); }
+      });
+      // after settling, keep a very slow idle drift; stop entirely when off-screen
+      if (!reduce && heroVisible) requestAnimationFrame(frame);
+    }
+    let heroVisible = true;
+    new IntersectionObserver(([e]) => { const was = heroVisible; heroVisible = e.isIntersecting; if (heroVisible && !was) requestAnimationFrame(frame); }).observe(cv);
+    layout(); requestAnimationFrame(frame);
+    addEventListener('resize', () => { layout(); if (reduce) requestAnimationFrame(frame); });
+  }
+
+  /* ---------- How we build: involvement chart + stage highlight ---------- */
+  const journey = document.querySelector('.journey');
+  if (journey) {
+    const svg = journey.querySelector('svg'), tags = journey.querySelector('.j-tags');
+    const NS = 'http://www.w3.org/2000/svg', W = 1000, H = 200;
+    // share of the work at each stage (illustrative): I2B tapers off, the founder's team grows
+    const i2b = [.92, .96, .86, .52, .2], you = [.12, .22, .42, .72, .96];
+    const xs = i2b.map((_, k) => (k + .5) * W / 5), y = v => H - 8 - v * (H - 24);
+    const smooth = vals => { // Catmull-Rom through the stage centres, flat to the edges
+      const p = [[0, y(vals[0])], ...vals.map((v, k) => [xs[k], y(v)]), [W, y(vals[vals.length - 1])]];
+      let d = `M${p[0][0]},${p[0][1]}`;
+      for (let k = 0; k < p.length - 1; k++) {
+        const a = p[k - 1] || p[k], b = p[k], c = p[k + 1], e = p[k + 2] || c;
+        d += ` C${b[0] + (c[0] - a[0]) / 6},${b[1] + (c[1] - a[1]) / 6} ${c[0] - (e[0] - b[0]) / 6},${c[1] - (e[1] - b[1]) / 6} ${c[0]},${c[1]}`;
+      }
+      return d;
+    };
+    const el = (tag, attrs) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
+    const defs = el('defs', {});
+    defs.innerHTML = '<linearGradient id="gI" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ae3ff" stop-opacity=".35"/><stop offset="1" stop-color="#6ae3ff" stop-opacity="0"/></linearGradient><linearGradient id="gY" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fafafa" stop-opacity=".16"/><stop offset="1" stop-color="#fafafa" stop-opacity="0"/></linearGradient>';
+    svg.append(defs);
+    const bands = xs.map((x, k) => { const b = el('rect', { class: 'band', x: k * W / 5, y: 0, width: W / 5, height: H }); svg.append(b); return b; });
+    [1, 2, 3, 4].forEach(k => svg.append(el('line', { x1: k * W / 5, x2: k * W / 5, y1: 0, y2: H, stroke: '#ffffff14', 'vector-effect': 'non-scaling-stroke' })));
+    const dI = smooth(i2b), dY = smooth(you);
+    svg.append(el('path', { d: `${dI} L${W},${H} L0,${H} Z`, fill: 'url(#gI)' }));
+    svg.append(el('path', { d: `${dY} L${W},${H} L0,${H} Z`, fill: 'url(#gY)' }));
+    svg.append(el('path', { d: dI, fill: 'none', stroke: '#6ae3ff', 'stroke-width': 2.5, 'vector-effect': 'non-scaling-stroke' }));
+    svg.append(el('path', { d: dY, fill: 'none', stroke: '#fafafa', 'stroke-width': 2, 'stroke-dasharray': '6 5', 'vector-effect': 'non-scaling-stroke' }));
+    // curve labels sit in HTML so the stretched SVG never distorts text
+    const tag = (cls, txt, k, v) => { const t = document.createElement('span'); t.className = 'j-tag ' + cls; t.textContent = txt; t.style.left = (xs[k] / W * 100) + '%'; t.style.top = (y(v) / H * 100) + '%'; tags.append(t); };
+    tag('i2b', 'I2B leads the build', 1, i2b[1]);
+    tag('you end', 'You lead', 4, you[4]);
+    // hover / focus highlights one stage column and its slice of the chart
+    const stages = [...journey.querySelectorAll('.jstage')];
+    const hl = k => { journey.classList.toggle('has-hl', k >= 0); stages.forEach((s, n) => s.classList.toggle('hl', n === k)); bands.forEach((b, n) => b.classList.toggle('on', n === k)); };
+    stages.forEach((s, k) => { s.addEventListener('mouseenter', () => hl(k)); s.addEventListener('focus', () => hl(k)); s.addEventListener('blur', () => hl(-1)); });
+    journey.querySelector('.jstages').addEventListener('mouseleave', () => hl(-1));
+  }
+
+  /* ---------- routed contact / application form ---------- */
   document.querySelectorAll('form[data-routed]').forEach(form => {
     const groups = [...form.querySelectorAll('.fields[data-for]')];
     const shared = form.querySelector('.fields[data-shared]');
-    const actions = form.querySelector('.form-actions');
     const submit = form.querySelector('[type=submit]');
-    const note = form.querySelector('[data-note]');
-    const step = form.querySelector('.stepper .st'), pips = form.querySelectorAll('.stepper .pips i');
-    const notes = { founder: 'Goes straight to the founding team.', other: 'We route it to the right person.' };
+    const note = form.querySelector('.next-note');
+    const notes = { founder: 'Goes straight to the founding team. Expect a reply within 5 working days.', other: 'We route it to the right person and usually reply within 3 working days.' };
     const route = v => {
       groups.forEach(g => { const on = g.dataset.for === v; g.hidden = !on; g.querySelectorAll('input,textarea,select').forEach(f => f.disabled = !on); });
       if (shared) shared.hidden = !v;
-      if (actions) actions.hidden = !v;
-      if (submit && v) submit.querySelector('.lbl').textContent = form.dataset['label' + v[0].toUpperCase() + v.slice(1)] || 'Send';
+      if (submit) { submit.hidden = !v; submit.querySelector('.lbl').textContent = form.dataset['label' + (v ? v[0].toUpperCase() + v.slice(1) : '')] || 'Send'; }
       if (note) note.textContent = notes[v] || '';
-      if (step) { step.textContent = v ? 'Step 2 of 2' : 'Step 1 of 2'; pips[1]?.classList.toggle('on', !!v); }
     };
     form.querySelectorAll('input[name=intent]').forEach(r => r.addEventListener('change', () => route(r.value)));
     const qs = new URLSearchParams(location.search), legacy = { client: 'business', careers: 'careers' };
@@ -174,20 +157,21 @@
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      let first = null;
+      let ok = true, first;
       form.querySelectorAll('[required]:not(:disabled)').forEach(f => {
         const wrap = f.closest('.field'), err = wrap?.querySelector('.err');
-        const bad = !f.value.trim() || (f.type === 'email' && !/^\S+@\S+\.\S+$/.test(f.value)) || (f.type === 'url' && !/^https?:\/\//.test(f.value));
+        const bad = !f.value.trim() || (f.type === 'email' && !/^\S+@\S+\.\S+$/.test(f.value)) || (f.type === 'url' && f.value && !/^https?:\/\//.test(f.value));
         wrap?.classList.toggle('bad', bad);
         if (err) err.textContent = bad ? (f.dataset.err || 'Please fill this in.') : '';
         f.setAttribute('aria-invalid', bad);
         if (bad && !first) first = f;
+        ok = ok && !bad;
       });
-      if (first) { first.focus(); return; }
+      if (!ok) { first.focus(); return; }
       const intent = form.querySelector('input[name=intent]:checked')?.value;
       const done = form.parentElement.querySelector('.success');
       form.hidden = true;
-      if (done) { done.hidden = false; done.querySelector('[data-next]')?.replaceChildren(document.createTextNode((notes[intent] || '') + ' We reply within 3 working days.')); done.focus(); }
+      if (done) { done.hidden = false; done.querySelector('[data-next]')?.replaceChildren(document.createTextNode(notes[intent] || '')); done.focus(); }
     });
   });
 
