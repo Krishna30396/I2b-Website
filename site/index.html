@@ -260,70 +260,58 @@
   </div>
 </section>
 
-<!-- 9 · ONE CLOSING ASK (two CTA blocks merged) + routed contact -->
-<section class="pad dark-2" id="contact" aria-labelledby="h-contact">
-  <div class="wrap contact">
-    <div class="reveal">
-      <p class="eyebrow">Start a conversation</p>
-      <h2 id="h-contact">Have an idea worth <em>building</em>?</h2>
-      <p class="lede">Two quick questions and your note goes straight to the right person.</p>
-      <address>
-        Mahaveer Gateway, Unit 02, 14th Floor<br>Nanakramguda, Gachibowli<br>Hyderabad, Telangana 500032<br>
-        <a href="https://maps.google.com/?q=Mahaveer+Gateway+Nanakramguda+Hyderabad" target="_blank" rel="noopener">Open in Maps ↗</a><br><br>
-        <a href="mailto:contact@i2b.in">contact@i2b.in</a>
-      </address>
-    </div>
-    <div class="form-card reveal">
-      <form data-routed novalidate data-label-founder="Send to the founders" data-label-other="Send message">
-        <fieldset class="intents">
-          <legend>Who's getting in touch?</legend>
-          <div class="intent"><input type="radio" name="intent" id="i-f" value="founder"><label for="i-f"><b>I'm a founder</b><span>I have an idea or an early product</span></label></div>
-          <div class="intent"><input type="radio" name="intent" id="i-o" value="other"><label for="i-o"><b>Something else</b><span>Partnerships, business, careers, press</span></label></div>
-        </fieldset>
-        <div class="fields" data-shared hidden>
-          <div class="two">
-            <div class="field"><label for="c-name">Full name</label><input id="c-name" name="name" required autocomplete="name" data-err="Tell us your name."><span class="err" aria-live="polite"></span></div>
-            <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" required autocomplete="email" data-err="Enter a valid email."><span class="err" aria-live="polite"></span></div>
-          </div>
-        </div>
-        <div class="fields" data-for="founder" hidden style="margin-top:14px">
-          <div class="field"><label for="f-idea">Your idea in one line</label><input id="f-idea" name="idea" required data-err="One line is enough."><span class="err" aria-live="polite"></span></div>
-          <div class="field"><label for="f-stage">Stage</label><select id="f-stage" name="stage"><option>Just an idea</option><option>Prototype</option><option>Early users</option><option>Revenue</option></select></div>
-          <p class="next-note" style="margin:0">Want to share more? Use the <a class="link" style="color:var(--ink-light)" href="build.html">full founder application</a>.</p>
-        </div>
-        <div class="fields" data-for="other" hidden style="margin-top:14px">
-          <div class="field"><label for="o-topic">What's it about?</label><select id="o-topic" name="topic"><option value="business">A platform for my business</option><option value="careers">Careers at I2B</option><option value="investors">Investing or partnering</option><option value="press">Press</option><option value="other">Something else</option></select></div>
-          <div class="field"><label for="o-msg">Message</label><textarea id="o-msg" name="message" required data-err="Add a short message."></textarea><span class="err" aria-live="polite"></span></div>
-        </div>
-        <div style="margin-top:22px;display:grid;gap:10px">
-          <button class="btn btn-primary" type="submit" hidden style="justify-content:center"><span class="lbl">Send</span> <span class="arr">→</span></button>
-          <p class="next-note" aria-live="polite"></p>
-        </div>
-      </form>
-      <div class="success" hidden tabindex="-1">
-        <div class="ok"><svg width="22" height="22" viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
-        <h3>Thanks. It's with the right person.</h3>
-        <p class="next-note" data-next style="font-size:15px"></p>
-      </div>
-    </div>
-  </div>
-</section>
 </main>
 
 <footer class="footer" data-surface="light">
   <div class="wrap">
-    <div class="foot-close">
-      <h2>Let's build something <em>that lasts</em>.</h2>
-      <a class="btn btn-ink" href="build.html">Build with us <span class="arr">→</span></a>
+    <!-- Start a conversation, merged into the closing statement -->
+    <div class="foot-close with-form" id="contact">
+      <div>
+        <h2 id="h-contact">Let's build something <em>that lasts</em>.</h2>
+        <p class="foot-sub">Two quick questions and your note goes straight to the right person.</p>
+      </div>
+      <div class="form-card">
+        <form data-routed novalidate data-label-founder="Send to the founders" data-label-other="Send message">
+          <fieldset class="intents">
+            <legend>Who's getting in touch?</legend>
+            <div class="intent"><input type="radio" name="intent" id="i-f" value="founder"><label for="i-f"><b>I'm a founder</b><span>I have an idea or an early product</span></label></div>
+            <div class="intent"><input type="radio" name="intent" id="i-o" value="other"><label for="i-o"><b>Something else</b><span>Partnerships, business, careers, press</span></label></div>
+          </fieldset>
+          <div class="fields" data-shared hidden>
+            <div class="two">
+              <div class="field"><label for="c-name">Full name</label><input id="c-name" name="name" required autocomplete="name" data-err="Tell us your name."><span class="err" aria-live="polite"></span></div>
+              <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" required autocomplete="email" data-err="Enter a valid email."><span class="err" aria-live="polite"></span></div>
+            </div>
+          </div>
+          <div class="fields" data-for="founder" hidden style="margin-top:14px">
+            <div class="field"><label for="f-idea">Your idea in one line</label><input id="f-idea" name="idea" required data-err="One line is enough."><span class="err" aria-live="polite"></span></div>
+            <div class="field"><label for="f-stage">Stage</label><select id="f-stage" name="stage"><option>Just an idea</option><option>Prototype</option><option>Early users</option><option>Revenue</option></select></div>
+            <p class="next-note" style="margin:0">Want to share more? Use the <a class="link" style="color:var(--ink-light)" href="build.html">full founder application</a>.</p>
+          </div>
+          <div class="fields" data-for="other" hidden style="margin-top:14px">
+            <div class="field"><label for="o-topic">What's it about?</label><select id="o-topic" name="topic"><option value="business">A platform for my business</option><option value="careers">Careers at I2B</option><option value="investors">Investing or partnering</option><option value="press">Press</option><option value="other">Something else</option></select></div>
+            <div class="field"><label for="o-msg">Message</label><textarea id="o-msg" name="message" required data-err="Add a short message."></textarea><span class="err" aria-live="polite"></span></div>
+          </div>
+          <div style="margin-top:22px;display:grid;gap:10px">
+            <button class="btn btn-primary" type="submit" hidden style="justify-content:center"><span class="lbl">Send</span> <span class="arr">→</span></button>
+            <p class="next-note" aria-live="polite"></p>
+          </div>
+        </form>
+        <div class="success" hidden tabindex="-1">
+          <div class="ok"><svg width="22" height="22" viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+          <h3>Thanks. It's with the right person.</h3>
+          <p class="next-note" data-next style="font-size:15px"></p>
+        </div>
+      </div>
     </div>
     <div class="foot-grid">
-      <div><img class="flogo" src="assets/i2b-logo.png" alt="I2B"><p style="max-width:32ch;margin-top:16px">An operator-led venture studio co-building AI companies with founders, from Hyderabad.</p></div>
+      <div><img class="flogo" src="assets/i2b-logo.png" alt="I2B"><p style="max-width:32ch;margin-top:16px">An operator-led venture studio co-building AI companies with founders, from Hyderabad.</p><p class="foot-addr">Mahaveer Gateway, Unit 02, 14th Floor, Nanakramguda, Gachibowli, Hyderabad, Telangana 500032</p></div>
       <div><h4>Studio</h4><ul><li><a href="studio.html">How we build</a></li><li><a href="build.html">Build with us</a></li><li><a href="index.html#fit">Are we a fit?</a></li></ul></div>
       <div><h4>Ventures</h4><ul><li><a href="ventures/senseahead.html">SenseAhead</a></li><li><a href="https://infigro.ai" target="_blank" rel="noopener">InfiGro ↗</a></li><li><a href="https://www.kruco.in" target="_blank" rel="noopener">KruCo ↗</a></li></ul></div>
       <div><h4>Company</h4><ul><li><a href="careers.html">Careers</a></li><li><a href="index.html#contact">Contact</a></li><li><a href="mailto:contact@i2b.in">contact@i2b.in</a></li></ul></div>
       <div><h4>Follow</h4><ul><li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a></li><li><a href="https://x.com/" target="_blank" rel="noopener">X ↗</a></li><li><a href="https://maps.google.com/?q=Mahaveer+Gateway+Nanakramguda+Hyderabad" target="_blank" rel="noopener">Office on Maps ↗</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>Redesign concept, not the official I2B website · © 2026 I2B Technologies</span><span>Mahaveer Gateway, Gachibowli, Hyderabad</span></div>
+    <div class="foot-bottom"><span>Redesign concept, not the official I2B website · © 2026 I2B Technologies</span></div>
   </div>
 </footer>
 <script src="assets/main.js"></script>
