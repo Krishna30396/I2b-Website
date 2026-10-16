@@ -275,8 +275,6 @@ h1 em, h2 em { font-style: italic; color: var(--accent); }
 .sf-no::after { content: ""; position: absolute; left: 0; right: 0; top: calc(10px + .72em); height: 2px; border-radius: 2px; background: var(--ink); opacity: .55; }
 .sf-yes b { display: block; font: 400 clamp(24px, 2.6vw, 36px)/1.15 var(--f-display); letter-spacing: -.015em; color: var(--ink); }
 .sf-yes span { display: block; margin-top: 8px; color: var(--muted); font-size: 16px; }
-.sf-replay { margin-top: 24px; border-color: var(--border); color: var(--ink); }
-.sf-replay:hover { border-color: var(--ink); background: transparent; }
 /* live: rows start un-struck with the answer hidden, then play in order */
 .sf-live .sf-no { color: var(--ink); transition: color 500ms 250ms; }
 .sf-live .sf-no::after { transform: scaleX(0); transform-origin: left; transition: transform 650ms var(--ease-out); }

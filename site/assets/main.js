@@ -173,19 +173,15 @@
     }
   }
 
-  /* ---------- are we a fit: strike "not this", reveal "this", row by row ---------- */
+  /* ---------- are we a fit: strike "not this", reveal "this", row by row (plays once) ---------- */
   const fit = document.querySelector('[data-fit]');
   if (fit && !reduce) {
-    const rows = [...fit.querySelectorAll('.sf-rows li')], replay = fit.querySelector('.sf-replay');
-    let timers = [];
+    const rows = [...fit.querySelectorAll('.sf-rows li')];
     const play = () => {
-      timers.forEach(clearTimeout); rows.forEach(r => r.classList.remove('on'));
-      void fit.offsetWidth; // restart the transitions
-      timers = rows.map((r, i) => setTimeout(() => r.classList.add('on'), 250 + i * 450));
+      rows.forEach((r, i) => setTimeout(() => r.classList.add('on'), 250 + i * 450));
     };
-    fit.classList.add('sf-live'); replay.hidden = false;
+    fit.classList.add('sf-live');
     new IntersectionObserver(([e], o) => { if (e.isIntersecting) { play(); o.disconnect(); } }, { threshold: .3 }).observe(fit);
-    replay.addEventListener('click', play);
   }
 
   /* ---------- routed contact / application form ---------- */
